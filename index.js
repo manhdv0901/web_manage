@@ -202,6 +202,12 @@ app.get('/home',(req,res)=>{
 app.get('/index',(req,res)=>{
     res.render('index')
 })
+app.get('/table',(req,res)=>{
+    res.render('listPatients')
+})
+app.get('/list-data',(req,res)=>{
+    res.render('dataDevice')
+})
 
 app.listen(port,()=>{
     console.log('listening port 3456')
