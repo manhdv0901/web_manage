@@ -43,6 +43,10 @@ app.get('/register',(req,res)=>{
 app.get('/table',(req,res)=>{
     res.render('table')
 });
+
+app.get('/table2',(req,res)=>{
+    res.render('table_2')
+});
 // app.get('/login',(req,res)=>{
 //     res.render('login')
 // });
