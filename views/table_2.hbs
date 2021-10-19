@@ -1,34 +1,158 @@
-<table class="table table-striped table-dark">
-    <thead>
+<!--<table class="table table-striped table-dark">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th scope="col">#</th>-->
+<!--        <th scope="col">Nhịp Tim</th>-->
+<!--        <th scope="col">SP02</th>-->
+<!--        <th scope="col">Nhiệt Độ</th>-->
+<!--        <th scope="col">Trạng thái</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr>-->
+<!--        <th scope="row">1</th>-->
+<!--        <td>102</td>-->
+<!--        <td>43</td>-->
+<!--        <td>43</td>-->
+<!--        <td>Bình thường</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <th scope="row">2</th>-->
+<!--        <td>162</td>-->
+<!--        <td>43</td>-->
+<!--        <td>43</td>-->
+<!--        <td>Bình thường</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <th scope="row">3</th>-->
+<!--        <td>108</td>-->
+<!--        <td>43</td>-->
+<!--        <td>43</td>-->
+<!--        <td>Nguy Hiểm</td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+<table class="table my-0" id="dataTable">
     <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nhịp Tim</th>
-        <th scope="col">SP02</th>
-        <th scope="col">Nhiệt Độ</th>
-        <th scope="col">Trạng thái</th>
+        <th>ID</th>
+        <th>HEART</th>
+        <th>SPO2</th>
+        <th>TEMPERATURE</th>
+        <th>STATUS</th>
     </tr>
-    </thead>
-    <tbody>
+
+
+    {{#each ups}}
     <tr>
-        <th scope="row">1</th>
-        <td>102</td>
-        <td>43</td>
-        <td>43</td>
-        <td>Bình thường</td>
+        <td><img class="rounded-circle me-2" width="30" height="30"
+                 src="img/avatars/avatar1.jpeg"/>{{this.id}}
+        </td>
+        <td>{{this.id_device}}</td>
+        <td>23</td>
+        <td>23</td>
+        <td>35</td>
+        <td>
+            <button type="button" class="btn-outline-success">Bình Thường</button>
+        </td>
+
     </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>162</td>
-        <td>43</td>
-        <td>43</td>
-        <td>Bình thường</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td>108</td>
-        <td>43</td>
-        <td>43</td>
-        <td>Nguy Hiểm</td>
-    </tr>
-    </tbody>
+    {{/each}}
+<!--    <tr>-->
+<!--        <td><img class="rounded-circle me-2" width="30" height="30"-->
+<!--                 src="img/avatars/avatar2.jpeg"/>2-->
+<!--        </td>-->
+<!--        <td>Nguyen Van B</td>-->
+<!--        <td>23</td>-->
+<!--        <td>-->
+<!--            <button type="button" class="btn-outline-success2">Cảnh báo</button>-->
+<!--        </td>-->
+
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td><img class="rounded-circle me-2" width="30" height="30"-->
+<!--                 src="img/avatars/avatar3.jpeg"/>3-->
+<!--        </td>-->
+<!--        <td>Hoang Van B</td>-->
+<!--        <td>32</td>-->
+<!--        <td>-->
+<!--            <button type="button" class="btn-outline-success">Bình Thường</button>-->
+<!--        </td>-->
+
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td><img class="rounded-circle me-2" width="30" height="30"-->
+<!--                 src="img/avatars/avatar4.jpeg"/>4-->
+<!--        </td>-->
+<!--        <td>Pham Van B</td>-->
+<!--        <td>45</td>-->
+<!--        <td>-->
+<!--            <button type="button" class="btn-outline-success">Bình Thường</button>-->
+<!--        </td>-->
+
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td><img class="rounded-circle me-2" width="30" height="30"-->
+<!--                 src="img/avatars/avatar5.jpeg"/>5r-->
+<!--        </td>-->
+<!--        <td>Nguyen Van C</td>-->
+<!--        <td>54</td>-->
+<!--        <td>-->
+<!--            <button type="button" class="btn-outline-success">Bình Thường</button>-->
+<!--        </td>-->
+
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td><img class="rounded-circle me-2" width="30" height="30"-->
+<!--                 src="img/avatars/avatar1.jpeg"/>6-->
+<!--        </td>-->
+<!--        <td>Nguyen Van D</td>-->
+<!--        <td>54</td>-->
+<!--        <td>-->
+<!--            <button type="button" class="btn-outline-success">Bình Thường</button>-->
+<!--        </td>-->
+
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td><img class="rounded-circle me-2" width="30" height="30"-->
+<!--                 src="img/avatars/avatar2.jpeg"/>7<br/></td>-->
+<!--        <td>Nguyen Van H</td>-->
+<!--        <td>65</td>-->
+<!--        <td>-->
+<!--            <button type="button" class="btn-outline-success">Bình Thường</button>-->
+<!--        </td>-->
+
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td><img class="rounded-circle me-2" width="30" height="30"-->
+<!--                 src="img/avatars/avatar3.jpeg"/>8-->
+<!--        </td>-->
+<!--        <td>Nguyen Van Y</td>-->
+<!--        <td>65</td>-->
+<!--        <td>-->
+<!--            <button type="button" class="btn-outline-success">Bình Thường</button>-->
+<!--        </td>-->
+
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td><img class="rounded-circle me-2" width="30" height="30"-->
+<!--                 src="img/avatars/avatar4.jpeg"/>9-->
+<!--        </td>-->
+<!--        <td>Nguyen Van M</td>-->
+<!--        <td>32</td>-->
+<!--        <td>-->
+<!--            <button type="button" class="btn-outline-success">Bình Thường</button>-->
+<!--        </td>-->
+
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td><img class="rounded-circle me-2" width="30" height="30"-->
+<!--                 src="img/avatars/avatar5.jpeg"/>10-->
+<!--        </td>-->
+<!--        <td>Nguyen Van J</td>-->
+<!--        <td>54</td>-->
+<!--        <td>-->
+<!--            <button type="button" class="btn-outline-success">Bình Thường</button>-->
+<!--        </td>-->
+
+<!--    </tr>-->
 </table>
