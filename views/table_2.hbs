@@ -42,16 +42,24 @@
     </tr>
     {{#each ups}}
     <tr>
-        <td><img class="rounded-circle me-2" width="30" height="30"
-                 src="img/avatars/avatar1.jpeg"/>{{this._id}}
-        </td>
-        <td style="color: #1c1c21">{{this.id_device}}</td>
-        <td>23</td>
-        <td>23</td>
-        <td>35</td>
-        <td>
-            <button type="button" class="btn-outline-success">Bình Thường</button>
-        </td>
+<!--        <td><img class="rounded-circle me-2" width="30" height="30"-->
+<!--                 src="img/avatars/avatar1.jpeg"/>{{this._id}}-->
+<!--        </td>-->
+        {{#heart}}
+            <td>{{value}}</td>
+        {{/heart}}
+        {{#spo2}}
+        <td>{{value}}</td>
+        {{/spo2}}
+        {{#temperature}}
+            <td>{{value}}</td>
+        {{/temperature}}
+        {{#button}}
+            <td>{{value}}</td>
+        {{/button}}
+<!--        <td>-->
+<!--            <button type="button" class="btn-outline-success">Bình Thường</button>-->
+<!--        </td>-->
 
     </tr>
     {{/each}}

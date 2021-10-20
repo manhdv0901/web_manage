@@ -76,7 +76,7 @@ var DHT11Schema = new mongoose.Schema({
 });
 
 //create collection mongodb
-var DHT11 = mongoose.model("device", DHT11Schema);
+var DHT11 = mongoose.model("data-devciecs", DHT11Schema);
 
 app.post("/data", (req,res) =>{
     console.log("Received create dht11 data request post dht11");
@@ -130,7 +130,7 @@ app.post("/data", (req,res) =>{
     console.log("data post req: ",req.body);
 
     // insert data
-    // db.collection("device").insertOne(newDHT11,(err,result)=> {
+    // db.collection("data-devices").insertOne(newDHT11,(err,result)=> {
     //     if (err) throw  err;
     //     console.log("Thêm thành công");
     //     console.log(result);
@@ -175,7 +175,7 @@ app.post("/data", (req,res) =>{
 
     };
 
-    db.collection("device").updateOne(oldValue,newValue,(err,obj)=>{
+    db.collection("data-devices").updateOne(oldValue,newValue,(err,obj)=>{
         if(err) throw  err;
         if(obj.length!=0) console.log("Cập nhật thành công");
 
