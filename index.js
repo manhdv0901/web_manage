@@ -223,16 +223,16 @@ app.get('/register',(req,res)=>{
 });
 
 app.get('/table',(req,res)=>{
-    res.render('table')
+    res.render('listPatients')
 });
 
 app.get('/table2',(req,res)=>{
-    var patientModel = db.model('device', DHT11Schema);
+
     DHT11.find({},)
         .then(patientsList => {
             console.log('thành công')
             res.render('table_2',{
-                ups:patientsList.map(patientsList => patientsList.toJSON())
+                aps:patientsList.map(patientsList => patientsList.toJSON())
             })
         })
     // db.collection("device").find({},(err, array) => {
