@@ -10,7 +10,10 @@ const mongoose = require("mongoose");
 const path = require('path')
 const {log} = require("nodemon/lib/utils");
 app.use(express.static(path.join(__dirname, 'public')))
-
+app.use(express.urlencoded({
+    extended: true
+}));
+app.use(express.json());
 app.engine('hbs',exhbs({
     defaultLayout: 'main',
     extname: '.hbs'
@@ -181,18 +184,7 @@ app.post("/data", (req,res) =>{
 
 });
 
-app.get("/data",(req,res) => {
-    console.log("request create data");
 
-    db.collection("device").findOne({},(err, array) => {
-        if (err) {
-            console.log("find error");
-        }
-        console.log("lấy dữ liệu thành công ");
-        res.json(array);
-    })
-
-})
 
 app.set('view engine','hbs')
 app.set('views',path.join(__dirname,'/views'))
@@ -226,30 +218,64 @@ app.get('/table',(req,res)=>{
     res.render('listPatients')
 });
 
-app.get('/table2',(req,res)=>{
-
-    DHT11.find({},)
-        .then(patientsList => {
-            console.log('thành công')
-            res.render('table_2',{
-                aps:patientsList.map(patientsList => patientsList.toJSON())
-            })
-        })
-    // db.collection("device").find({},(err, array) => {
-    //     if (err) {
-    //         console.log("find error");
-    //     }
-    //     console.log("lấy dữ liệu thành công ");
+app.get('/table2',async (req,res)=>{
+    // mongoose.model("device", DHT11Schema).find({},(err, array) => {
+    //     if (err) throw  err;
     //     res.json(array);
-    // }).then(patients => {
-    //         res.render('table_2',{
-    //             ups: patients.map(patients => patients.toJSON())
-    //         })
-    //     })
+    const  docs = await DHT11.find({});
+            docs.map(doc => doc.toJSON());
+            console.log("{{{{", docs)
+})
+
+app.get("/data2",(req,res) => {
+        console.log("request create data");
+        db.collection("device").find({},(err, array) => {
+            if (err) {
+                console.log("find error");
+                console.log("[[[:",)
+            }
+            console.log("lấy dữ liệu thành công ", array);
+           res.send(array);
+            // res.json(array);
+        })
+
 });
-// app.get('/login',(req,res)=>{
-//     res.render('login')
-// });
+
+app.get("/list",async (req, res) => {
+    var model = db.model('data-devices', DHT11Schema);
+    var methodFind = model.find({});
+    methodFind.exec((err,data) => {
+        if (err) throw err;
+        res.render('table_2', {
+            ups: data.map(aa => aa.toJSON())
+        })
+    })
+    })
+    app.get("/list2", (req, res) => {
+        // db.collection('device').findOne({}, (err, array) => {
+        //     if (err) {
+        //         console.log("find error");
+        //     }
+        //     console.log("lấy dữ liệu thành công ");
+        //     res.send(array);
+        //     // res.json(array);
+        // })
+        const dht = db.model('device', DHT11Schema);
+        dht.find({}).then(list => {
+            res.render('table_2',{
+                ups:list.map( lis => lis.toJSON())
+        })})
+    })
+
+    // const patients = await DHT11.find({});
+    // console.log('::::::', patients);
+    // try{
+    //     res.send(patients);
+    // }catch (e){
+    //     res.status(500).send(e);
+    // }
+    // res.render('table_2');
+// })
 
 app.listen(port,()=>{
     console.log('listening port 3456')
