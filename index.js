@@ -16,7 +16,11 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.engine('hbs',exhbs({
     defaultLayout: 'main',
-    extname: '.hbs'
+    extname: '.hbs',
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    }
     }))
 
 //mang nhan data tu thiet bi
@@ -25,15 +29,37 @@ var myDataHea=[];
 var myDataSpo2 =[];
 var myDataButton= [];
 
+const DATABASE_URL ="mongodb+srv://sonhandsome01:sonhandsome01@test-data-datn.fwejn.mongodb.net/test-data-datn?retryWrites=true&w=majority";
 //config mongodb
-const DATABASE_URL ="mongodb+srv://admin:admin@cluster0.zhsjs.mongodb.net/devices";
+// const DATABASE_URL ="mongodb+srv://admin:admin@cluster0.zhsjs.mongodb.net/devices";
 const DATABASE_CONNECT_OPTION  = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 };
-//connect mongoose
+// //connect mongoose
 mongoose.connect(DATABASE_URL, DATABASE_CONNECT_OPTION);
 
+
+var DHT11Schema = new mongoose.Schema({
+    id: Number,
+    key_device:String,
+    spO2:
+        [{
+            value:Number,
+            date : Date
+        }],
+    temp:
+        [{
+            value:Number,
+            date : Date
+        }]
+    ,
+    heart_beat :
+        [{
+            value:Number,
+            date : Date
+        }]
+});
 //check connect mongoose
 mongoose.connection.on("connected", function (){
     console.log("connect successful");
@@ -45,35 +71,37 @@ mongoose.connection.on("disconnected", function (){
 //connect mongoose
 var db=mongoose.connection;
 
-//create model data device
-var DHT11Schema = new mongoose.Schema({
-    id: Number,
-    id_device:{type:String, default:"device01"},
-    temperature:
-        [{
-            data: Date,
-            value: Number
-        }]
-    ,
-    heart :
-        [{
-            data: Date,
-            value: Number
-        }]
-    ,
-    spo2:
-        [{
-            data: Date,
-            value: Number
-        }]
-    ,
-    button:
-        [{
-            id: Number,
-            data: Date,
-            value: Number
-        }]
-});
+
+
+
+// //create model data device
+// var DHT11Schema = new mongoose.Schema({
+//     id: Number,
+//     id_device:{type:String, default:"device01"},
+//     temperature:
+//         [{
+//             data: Date,
+//             value: Number
+//         }]
+//     ,
+//     heart :
+//         [{
+//             data: Date,
+//             value: Number
+//         }]
+//     ,
+//     spo2:
+//         [{
+//             data: Date,
+//             value: Number
+//         }]
+//     ,
+//     button:
+//         [{
+//             data: Date,
+//             value: Number
+//         }]
+// });
 
 //create collection mongodb
 var DHT11 = mongoose.model("data-devciecs", DHT11Schema);
@@ -100,21 +128,21 @@ app.post("/data", (req,res) =>{
         id_device:'device01',
         temperature:
             {
-                id: Number,
+
                 data: new Date(),
                 value: req.query.temperature,
             }
         ,
         heart:
             {
-                id: Number,
+
                 data: new Date(),
                 value: req.query.heart,
             }
         ,
         spo2:
             {
-                id: Number,
+
                 data: new Date(),
                 value: req.query.spo2,
             }
@@ -241,14 +269,20 @@ app.get("/data2",(req,res) => {
 
 });
 
-app.get("/list",async (req, res) => {
-    var model = db.model('data-devices', DHT11Schema);
-    var methodFind = model.find({});
-    methodFind.exec((err,data) => {
-        if (err) throw err;
-        res.render('table_2', {
-            ups: data.map(aa => aa.toJSON())
-        })
+app.get("/list",(req, res) => {
+    // var model = db.model('data-devices', DHT11Schema);
+    // var methodFind = model.find({});
+    // methodFind.exec((err,data) => {
+    //     if (err) throw err;
+    //     res.render('table_2', {
+    //         ups: data.map(aa => aa.toJSON())
+    //     })
+    // })
+    console.log("request create data");
+    var model = db.model('data-devices',DHT11Schema);
+
+    model.find({},(error,devices)=>{
+        res.render('table_2',{ups:devices})
     })
     })
     app.get("/list2", (req, res) => {

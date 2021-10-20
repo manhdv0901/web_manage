@@ -43,20 +43,21 @@
     {{#each ups}}
     <tr>
 <!--        <td><img class="rounded-circle me-2" width="30" height="30"-->
-<!--                 src="img/avatars/avatar1.jpeg"/>{{this._id}}-->
+<!--                 src="img/avatars/avatar1.jpeg"/>{{this.id}}-->
 <!--        </td>-->
-        {{#heart}}
-            <td>{{value}}</td>
-        {{/heart}}
-        {{#spo2}}
-        <td>{{value}}</td>
-        {{/spo2}}
-        {{#temperature}}
-            <td>{{value}}</td>
-        {{/temperature}}
-        {{#button}}
-            <td>{{value}}</td>
-        {{/button}}
+        <td>Index: {{@key}} Value = {{this.spO2.[0].value}}</td>
+<!--        {{#heart}}-->
+<!--            <td>{{value}}</td>-->
+<!--        {{/heart}}-->
+<!--        {{#spo2}}-->
+<!--        <td>{{value}}</td>-->
+<!--        {{/spo2}}-->
+<!--        {{#temperature}}-->
+<!--            <td>{{value}}</td>-->
+<!--        {{/temperature}}-->
+<!--        {{#button}}-->
+<!--            <td>{{value}}</td>-->
+<!--        {{/button}}-->
 <!--        <td>-->
 <!--            <button type="button" class="btn-outline-success">Bình Thường</button>-->
 <!--        </td>-->
