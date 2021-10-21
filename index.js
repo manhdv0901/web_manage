@@ -21,13 +21,14 @@ app.engine('hbs',exhbs({
         allowProtoPropertiesByDefault: true,
         allowProtoMethodsByDefault: true,
     }
+
     }))
 
 //mang nhan data tu thiet bi
 var myDataTem = [];
 var myDataHea=[];
 var myDataSpo2 =[];
-var myDataButton= [];
+var myDataWarn= [];
 
 const DATABASE_URL ="mongodb+srv://sonhandsome01:sonhandsome01@test-data-datn.fwejn.mongodb.net/test-data-datn?retryWrites=true&w=majority";
 //config mongodb
@@ -43,22 +44,27 @@ mongoose.connect(DATABASE_URL, DATABASE_CONNECT_OPTION);
 var DHT11Schema = new mongoose.Schema({
     id: Number,
     key_device:String,
+    heart:
+        [{
+            value:Number,
+            real_time :  Date
+        }],
     spO2:
         [{
             value:Number,
-            date : Date
-        }],
+            real_time :  Date
+        }]
+    ,
     temp:
         [{
             value:Number,
-            date : Date
-        }]
-    ,
-    heart_beat :
-        [{
-            value:Number,
-            date : Date
-        }]
+            real_time :  Date
+        }],
+    warnn:
+    [{
+        value: Number,
+        real_time :  Date
+    }]
 });
 //check connect mongoose
 mongoose.connection.on("connected", function (){
@@ -70,9 +76,6 @@ mongoose.connection.on("disconnected", function (){
 
 //connect mongoose
 var db=mongoose.connection;
-
-
-
 
 // //create model data device
 // var DHT11Schema = new mongoose.Schema({
@@ -104,61 +107,57 @@ var db=mongoose.connection;
 // });
 
 //create collection mongodb
-var DHT11 = mongoose.model("data-devciecs", DHT11Schema);
+var DHT11 = mongoose.model("data-sensor", DHT11Schema);
 
 app.post("/data", (req,res) =>{
     console.log("Received create dht11 data request post dht11");
     //get data request
-    console.log("temp:",req.query.temperature);
-    myDataTem.push(req.query.temperature);
-    console.log("value: ",myDataTem);
-
-    console.log("hum: ",req.query.humidity);
+    console.log("heart: ",req.query.heart);
     myDataHea.push(req.query.heart);
     console.log("value: ",myDataHea);
 
-    console.log("spo2: ",req.query.spo2);
-    myDataSpo2.push(req.query.spo2);
+    console.log("spO2: ",req.query.spO2);
+    myDataSpo2.push(req.query.spO2);
     console.log("value: ",myDataSpo2);
 
-    console.log("button: ",req.query.button);
-    myDataButton.push(req.query.button);
-    console.log("value: ",myDataButton);
-    var newDHT11 = DHT11({
-        id_device:'device01',
-        temperature:
-            {
+    console.log("temp:",req.query.temp);
+    myDataTem.push(req.query.temp);
+    console.log("value: ",myDataTem);
 
-                data: new Date(),
-                value: req.query.temperature,
-            }
-        ,
+    console.log("button: ",req.query.warnn);
+    myDataWarn.push(req.query.warnn);
+    console.log("value: ",myDataWarn);
+    var newDHT11 = DHT11({
+        key_device:'device01',
         heart:
             {
-
-                data: new Date(),
                 value: req.query.heart,
+                real_time: new Date(),
             }
         ,
-        spo2:
+        spO2:
             {
-
-                data: new Date(),
-                value: req.query.spo2,
+                value: req.query.spO2,
+                real_time: new Date(),
             }
         ,
-        button:
+        temp:
             {
-
-                data: new Date(),
-                value: req.query.button,
+                value: req.query.temp,
+                date: new Date(),
+            }
+        ,
+        warnn:
+            {
+                value: req.query.warnn,
+                real_time: new Date(),
             }
 
     });
-    console.log("data post req: ",req.body);
+    console.log("data post req: ",req.query);
 
     // insert data
-    // db.collection("data-devices").insertOne(newDHT11,(err,result)=> {
+    // db.collection("data-sensor").insertOne(newDHT11,(err,result)=> {
     //     if (err) throw  err;
     //     console.log("Thêm thành công");
     //     console.log(result);
@@ -166,44 +165,38 @@ app.post("/data", (req,res) =>{
 
 
     // update data
-    var oldValue={id_device:"device01"};
+    var oldValue={key_device:"device01"};
     var newValue={
         $push: {
-            temperature:
-                {
-                    id: Number,
-                    data: new Date(),
-                    value: req.query.temperature,
-                }
-            ,
             heart:
                 {
-                    id: Number,
-                    data: new Date(),
-                    // data:Date.now(),
                     value: req.query.heart,
+                    real_time: new Date(),
                 }
             ,
-            spo2:
+            spO2:
                 {
-                    id: Number,
-                    data: new Date(),
-                    value: req.query.spo2,
-
+                    value: req.query.spO2,
+                    real_time: new Date(),
                 }
             ,
-            button:
+            temp:
                 {
-                    id: Number,
-                    data:new Date(),
-                    value: req.query.button,
+                    value: req.query.temp,
+                    real_time: new Date(),
+                }
+            ,
+            warnn:
+                {
+                    value: req.query.warnn,
+                    real_time: new Date(),
                 }
 
         }
 
     };
 
-    db.collection("data-devices").updateOne(oldValue,newValue,(err,obj)=>{
+    db.collection("data-sensor").updateOne(oldValue,newValue,(err,obj)=>{
         if(err) throw  err;
         if(obj.length!=0) console.log("Cập nhật thành công");
 
@@ -246,71 +239,24 @@ app.get('/table',(req,res)=>{
     res.render('listPatients')
 });
 
-app.get('/table2',async (req,res)=>{
-    // mongoose.model("device", DHT11Schema).find({},(err, array) => {
-    //     if (err) throw  err;
-    //     res.json(array);
-    const  docs = await DHT11.find({});
-            docs.map(doc => doc.toJSON());
-            console.log("{{{{", docs)
-})
-
-app.get("/data2",(req,res) => {
-        console.log("request create data");
-        db.collection("device").find({},(err, array) => {
-            if (err) {
-                console.log("find error");
-                console.log("[[[:",)
-            }
-            console.log("lấy dữ liệu thành công ", array);
-           res.send(array);
-            // res.json(array);
-        })
-
-});
-
 app.get("/list",(req, res) => {
-    // var model = db.model('data-devices', DHT11Schema);
-    // var methodFind = model.find({});
-    // methodFind.exec((err,data) => {
-    //     if (err) throw err;
-    //     res.render('table_2', {
-    //         ups: data.map(aa => aa.toJSON())
-    //     })
+    var model = db.model('data-devices', DHT11Schema);
+    var methodFind = model.find({});
+    methodFind.exec((err,data) => {
+        if (err) throw err;
+        console.log("ham ham: ", data.map(aa => aa.toJSON()))
+        res.render('table_2', {
+            ups: data.map(aa => aa.toJSON())
+        })
+    })
+    // console.log("request create data");
+    // var model = db.model('data-sensor',DHT11Schema);
+    //
+    // model.find({},(error,devices)=>{
+    //     console.log("ham ham: ",devices)
+    //     res.render('table_2',{ups:devices})
     // })
-    console.log("request create data");
-    var model = db.model('data-devices',DHT11Schema);
-
-    model.find({},(error,devices)=>{
-        res.render('table_2',{ups:devices})
     })
-    })
-    app.get("/list2", (req, res) => {
-        // db.collection('device').findOne({}, (err, array) => {
-        //     if (err) {
-        //         console.log("find error");
-        //     }
-        //     console.log("lấy dữ liệu thành công ");
-        //     res.send(array);
-        //     // res.json(array);
-        // })
-        const dht = db.model('device', DHT11Schema);
-        dht.find({}).then(list => {
-            res.render('table_2',{
-                ups:list.map( lis => lis.toJSON())
-        })})
-    })
-
-    // const patients = await DHT11.find({});
-    // console.log('::::::', patients);
-    // try{
-    //     res.send(patients);
-    // }catch (e){
-    //     res.status(500).send(e);
-    // }
-    // res.render('table_2');
-// })
-
 app.listen(port,()=>{
     console.log('listening port 3456')
 })
