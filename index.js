@@ -48,15 +48,36 @@ mongoose.connection.on("disconnected", function (){
 var db=mongoose.connection;
 
 //create model data device
-var DHT11Schema = new mongoose.Schema({
-    key_device:{type:String, default:"device001"},
+// var DHT11Schema = new mongoose.Schema({
+//     key_device:{type:String, default:"device001"},
+//
+//     heart : Number,
+//     spO2: Number,
+//     temp:Number,
+//     warnn: Number,
+//     real_time: {type:Date, default: Date.now()}
+// });
 
-    heart : Number,
-    spO2: Number,
-    temp:Number,
-    warnn: Number,
-    real_time: {type:Date, default: Date.now()}
-});
+var DHT11Schema = new mongoose.Schema({
+    id:Number,
+    key_device:String,
+    heart:[
+        {value: Number,
+            date : Date}
+    ],
+    spO2: [
+        {value:Number,
+            date :Date}
+    ],
+    temp: [
+        {value:Number,
+            date :Date}
+    ],
+    sos: [
+        {value:Number,
+            date :Date}
+    ],
+})
 
 var DOCTORSchema = new mongoose.Schema({
     id:Number,
@@ -70,32 +91,46 @@ var DOCTORSchema = new mongoose.Schema({
 var DHT11 = mongoose.model("device01", DHT11Schema);
 var DOCTORS = mongoose.model('doctor', DOCTORSchema);
 
+
 app.post("/data", (req,res) =>{
-    console.log("Received create dht11 data request post dht11");
-    //get data request
-    console.log("heart: ",req.query.heart);
-    myDataHea.push(req.query.heart);
-    console.log("value: ",myDataHea);
-
-    console.log("spO2: ",req.query.spO2);
-    myDataSpo2.push(req.query.spO2);
-    console.log("value: ",myDataSpo2);
-
-    console.log("temp:",req.query.temp);
-    myDataTem.push(req.query.temp);
-    console.log("value: ",myDataTem);
-
-    console.log("button: ",req.query.warnn);
-    myDataWarn.push(req.query.warnn);
-    console.log("value: ",myDataWarn);
+    // console.log("Received create dht11 data request post dht11");
+    // //get data request
+    // console.log("heart: ",req.query.heart);
+    // myDataHea.push(req.query.heart);
+    // console.log("value: ",myDataHea);
+    //
+    // console.log("spO2: ",req.query.spO2);
+    // myDataSpo2.push(req.query.spO2);
+    // console.log("value: ",myDataSpo2);
+    //
+    // console.log("temp:",req.query.temp);
+    // myDataTem.push(req.query.temp);
+    // console.log("value: ",myDataTem);
+    //
+    // console.log("button: ",req.query.warnn);
+    // myDataWarn.push(req.query.warnn);
+    // console.log("value: ",myDataWarn);
     var newDHT11 = DHT11({
-        key_device:'device001',
-        heart: req.query.heart,
-        spO2: req.query.spO2,
-        temp: req.query.temp,
-        warnn: req.query.warnn,
+        id:req.body.id,
+        key_device:req.body.key_device,
+        heart:[
+            {value: req.body.heart.value,
+             date : req.body.heart.date}
+        ],
+        spO2: [
+            {value:req.body.value,
+                date : req.body.date}
+        ],
+        temp: [
+            {value:req.body.temp.value,
+                date : req.body.temp.date}
+        ],
+       sos: [
+            {value:req.body.sos.value,
+                date : req.body.temp.date}
+        ],
     });
-    console.log("data post req: ",req.query);
+    console.log("data post req: ",req.body);
     newDHT11.save(error => {
         if(!error){
             console.log("insert data devices succes");
