@@ -1,0 +1,27 @@
+ <table class="table my-0" id="dataTable">
+
+        <tr>
+            <th>AVATAR</th>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>USERNAME</th>
+            <th>STATUS</th>
+
+        </tr>
+
+     {{#each docs}}
+        <tbody>
+        <tr>
+            <td><img class="rounded-circle me-2" width="30" height="30" src="img/avatars/avatar+{{this.id}}.jpeg" /></td>
+            <td>{{this.id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.username}}</td>
+            {
+                {{this.state}} == 'free' ? <td><button type="button" class="btn-outline-success">FREE</button></td>
+            : <td><button type="button" class="btn-outline-success2">BUSY</button></td>
+            }
+
+        </tr>
+        </tbody>
+     {{/each}}
+    </table>

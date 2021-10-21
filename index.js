@@ -49,16 +49,26 @@ var db=mongoose.connection;
 
 //create model data device
 var DHT11Schema = new mongoose.Schema({
-    id_device:{type:String, default:"device01"},
-    temperature:Number,
+    key_device:{type:String, default:"device001"},
+
     heart : Number,
-    spo2: Number,
+    spO2: Number,
+    temp:Number,
     warnn: Number,
-    real_time: {Date, default: Date.now()}
+    real_time: {type:Date, default: Date.now()}
 });
+
+var DOCTORSchema = new mongoose.Schema({
+    id:Number,
+    name:String,
+    username:String,
+    password:String,
+    state:String,
+})
 
 //create collection mongodb
 var DHT11 = mongoose.model("device01", DHT11Schema);
+var DOCTORS = mongoose.model('doctor', DOCTORSchema);
 
 app.post("/data", (req,res) =>{
     console.log("Received create dht11 data request post dht11");
@@ -79,7 +89,7 @@ app.post("/data", (req,res) =>{
     myDataWarn.push(req.query.warnn);
     console.log("value: ",myDataWarn);
     var newDHT11 = DHT11({
-        key_device:'device01',
+        key_device:'device001',
         heart: req.query.heart,
         spO2: req.query.spO2,
         temp: req.query.temp,
@@ -151,6 +161,17 @@ app.get("/list",(req, res) => {
     //     res.render('table_2',{ups:devices})
     // })
     })
+app.get("/list-doctors", (req, res) => {
+    var model = db.model('doctor', DOCTORSchema);
+    var methodFind = model.find({});
+    methodFind.exec((err,data) => {
+        if (err) throw err;
+        console.log("ham ham: ", data.map(aa => aa.toJSON()))
+        res.render('listDoctor', {
+            docs: data.map(aa => aa.toJSON())
+        })
+    })
+})
 app.listen(port,()=>{
     console.log('listening port 3456')
 })
