@@ -1,27 +1,69 @@
- <table class="table my-0" id="dataTable">
+<!-- <table class="table my-0" id="dataTable">-->
+<!--<thead>-->
+<!--        <tr>-->
+<!--            <th style="padding: 50px" >AVATAR</th>-->
+<!--            <th style="float: left; padding: 50px">ID</th>-->
+<!--            <th style="padding: 50px">NAME</th>-->
+<!--            <th style="padding: 50px">USERNAME</th>-->
+<!--            <th style="padding: 50px">STATUS</th>-->
 
-        <tr>
-            <th>AVATAR</th>
-            <th>ID</th>
-            <th>NAME</th>
-            <th>USERNAME</th>
-            <th>STATUS</th>
+<!--        </tr>-->
+<!--</thead>-->
 
-        </tr>
+<!--     {{#each docs}}-->
+<!--&lt;!&ndash;        <tbody style="align-content: center;justify-self: center;text-align: center">&ndash;&gt;-->
 
-     {{#each docs}}
-        <tbody>
-        <tr>
-            <td><img class="rounded-circle me-2" width="30" height="30" src="img/avatars/avatar+{{this.id}}.jpeg" /></td>
-            <td>{{this.id}}</td>
-            <td>{{this.name}}</td>
-            <td>{{this.username}}</td>
-            {
-                {{this.state}} == 'free' ? <td><button type="button" class="btn-outline-success">FREE</button></td>
-            : <td><button type="button" class="btn-outline-success2">BUSY</button></td>
-            }
+<!--        <tr>-->
+<!--            <td style="padding: 50px"><img class="rounded-circle me-2" width="30" height="30" src="img/avatars/avatar{{this.id}}.jpeg" /></td>-->
+<!--            <td style="float: left; padding: 60px">{{this.id}}</td>-->
+<!--            <td style="padding: 50px">{{this.name}}</td>-->
+<!--            <td style="padding: 50px">{{this.username}}</td>-->
+<!--            <td>-->
+<!--                { {{this.state}} %2 ==0 ? <button type="button" class="btn-outline-success">FREE</button> : <button type="button" class="btn-outline-success2">BUSY</button> }-->
+<!--            </td>-->
+<!--&lt;!&ndash;            <td style="padding: 50px">{{this.state}}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                {{#each this.state}}&ndash;&gt;-->
+<!--&lt;!&ndash;                    {&ndash;&gt;-->
+<!--&lt;!&ndash;                    {{this.state}} %2 ==0 ? <td style="padding: 50px"><button type="button" class="btn-outline-success">FREE</button></td>&ndash;&gt;-->
+<!--&lt;!&ndash;                : <td style="padding: 50px"><button type="button" class="btn-outline-success2">BUSY</button></td>&ndash;&gt;-->
+<!--&lt;!&ndash;                    }&ndash;&gt;-->
+<!--&lt;!&ndash;                {{/each}}&ndash;&gt;-->
+<!--        </tr>-->
 
-        </tr>
-        </tbody>
-     {{/each}}
-    </table>
+
+<!--&lt;!&ndash;        </tbody>&ndash;&gt;-->
+<!--     {{/each}}-->
+<!--    </table>-->
+
+<div class="limiter">
+    <div class="container-table100">
+        <div class="wrap-table100">
+            <div class="table100">
+                <table>
+                    <thead>
+                    <tr class="table100-head">
+                        <th class="column1">Avatar</th>
+                        <th class="column2">ID</th>
+                        <th class="column3">Name</th>
+                        <th class="column4">Username</th>
+                        <th class="column5">Password</th>
+                        <th class="column6">State</th>
+                    </tr>
+                    </thead>
+                    {{#each docs}}
+                    <tbody>
+                    <tr>
+                        <td class="column1"><img class="rounded-circle me-2" width="30" height="30" src="img/avatars/avatar{{this.id}}.jpeg" /></td>
+                        <td class="column2">{{this.id}}</td>
+                        <td class="column3">{{this.name}}</td>
+                        <td class="column4">{{this.username}}</td>
+                        <td class="column5">{{this.password}}</td>
+                        <td class="column6">{{this.state}}</td>
+                    </tr>
+                    </tbody>
+                    {{/each}}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -131,10 +131,6 @@ app.get('/login',(req,res)=>{
     res.render('login')
 });
 
-app.get('/profile',(req,res)=>{
-    res.render('profile')
-});
-
 app.get('/register',(req,res)=>{
     res.render('register')
 });
@@ -162,7 +158,7 @@ app.get("/list",(req, res) => {
     // })
     })
 app.get("/list-doctors", (req, res) => {
-    var model = db.model('doctor', DOCTORSchema);
+    var model = db.model('doctors', DOCTORSchema);
     var methodFind = model.find({});
     methodFind.exec((err,data) => {
         if (err) throw err;
