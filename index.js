@@ -86,60 +86,117 @@ var DOCTORSchema = new mongoose.Schema({
     password:String,
     state:String,
 })
-
+var PATIENTSchema = new mongoose.Schema({
+    id:Number,
+    name: String,
+    username:String,
+    password: String,
+    age:Number,
+    birth_day:String,
+    phone:Number,
+    number_room:Number,
+    key_device:String
+})
 //create collection mongodb
-var DHT11 = mongoose.model("device01", DHT11Schema);
+var DHT11 = mongoose.model("data-devices", DHT11Schema);
 var DOCTORS = mongoose.model('doctor', DOCTORSchema);
+var PATIENT = mongoose.model('data-details-users', PATIENTSchema);
 
 
 app.post("/data", (req,res) =>{
-    // console.log("Received create dht11 data request post dht11");
-    // //get data request
-    // console.log("heart: ",req.query.heart);
-    // myDataHea.push(req.query.heart);
-    // console.log("value: ",myDataHea);
-    //
-    // console.log("spO2: ",req.query.spO2);
-    // myDataSpo2.push(req.query.spO2);
-    // console.log("value: ",myDataSpo2);
-    //
-    // console.log("temp:",req.query.temp);
-    // myDataTem.push(req.query.temp);
-    // console.log("value: ",myDataTem);
-    //
-    // console.log("button: ",req.query.warnn);
-    // myDataWarn.push(req.query.warnn);
-    // console.log("value: ",myDataWarn);
+    console.log("Received create dht11 data request post dht11");
+    //get data request
+    console.log("heart: ",req.query.heart);
+    myDataHea.push(req.query.heart);
+    console.log("value: ",myDataHea);
+
+    console.log("spO2: ",req.query.spO2);
+    myDataSpo2.push(req.query.spO2);
+    console.log("value: ",myDataSpo2);
+
+    console.log("temp:",req.query.temp);
+    myDataTem.push(req.query.temp);
+    console.log("value: ",myDataTem);
+
+    console.log("button: ",req.query.sos);
+    myDataSos.push(req.query.sos);
+    console.log("value: ",myDataSos);
     var newDHT11 = DHT11({
-        id:req.body.id,
-        key_device:req.body.key_device,
-        heart:[
-            {value: req.body.heart.value,
-             date : req.body.heart.date}
-        ],
-        spO2: [
-            {value:req.body.value,
-                date : req.body.date}
-        ],
-        temp: [
-            {value:req.body.temp.value,
-                date : req.body.temp.date}
-        ],
-       sos: [
-            {value:req.body.sos.value,
-                date : req.body.temp.date}
-        ],
+        key_device:'device04',
+        heart:
+            {
+                value: Number(req.query.heart),
+                real_time: new Date(),
+            }
+        ,
+        spO2:
+            {
+                value:Number(req.query.spO2),
+                real_time: new Date(),
+            }
+        ,
+        temp:
+            {
+                value: Number(req.query.temp),
+                date: new Date(),
+            }
+        ,
+        sos:
+            {
+                value: Number(req.query.sos),
+                real_time: new Date(),
+            }
+
     });
-    console.log("data post req: ",req.body);
-    newDHT11.save(error => {
-        if(!error){
-            console.log("insert data devices succes");
-            res.status(200).json();
-        }else {
-            console.log("don't insert data devices ");
-            res.status(400).json();
+    console.log("data post req: ",req.query);
+
+    //insert data
+    // db.collection("data-sensors").insertOne(newDHT11,(err,result)=> {
+    //     if (err) throw  err;
+    //     console.log("Thêm thành công");
+    //     console.log(result);
+    // });
+
+
+    // update data
+    var oldValue={key_device:"device04"};
+    var newValue={
+        $push: {
+            heart:
+                {
+                    value: Number(req.query.heart),
+                    real_time: new Date(),
+                }
+            ,
+            spO2:
+                {
+                    value: Number(req.query.spO2),
+                    real_time: new Date(),
+                }
+            ,
+            temp:
+                {
+                    value: Number(req.query.temp),
+                    real_time: new Date(),
+                }
+            ,
+            sos:
+                {
+                    value: Number(req.query.sos),
+                    real_time: new Date(),
+                }
+
         }
-    })
+
+    };
+
+    //update
+    var model = db.collection("data-sensors");
+    model.updateOne(oldValue,newValue,(err,obj)=>{
+        if(err) throw  err;
+        if(obj.length!=0) console.log("Cập nhật thành công");
+
+    });
     res.send("data sensor succesfully");
 
 });
@@ -171,7 +228,7 @@ app.get('/register',(req,res)=>{
 });
 
 app.get('/table',(req,res)=>{
-    res.render('listPatients')
+    res.render('addPatient')
 });
 
 app.get("/list",(req, res) => {
