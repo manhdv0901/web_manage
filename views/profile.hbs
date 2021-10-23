@@ -1,5 +1,3 @@
-
-
 <body id="page-top">
 <div id="wrapper">
     <div class="d-flex flex-column" id="content-wrapper">
@@ -12,7 +10,9 @@
                             <div class="card-header py-3">
                                 <h6 class="text-primary fw-bold m-0">Camera</h6>
                             </div>
-                            <div style="height: 449px;"><iframe allowfullscreen="" frameborder="0" width="560" height="315"></iframe></div>
+                            <div style="height: 449px;">
+                                <iframe allowfullscreen="" frameborder="0" width="560" height="315"></iframe>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -27,7 +27,8 @@
                                             </div>
                                             <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
                                         </div>
-                                        <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
+                                        <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since
+                                            last month</p>
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +42,8 @@
                                             </div>
                                             <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
                                         </div>
-                                        <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
+                                        <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since
+                                            last month</p>
                                     </div>
                                 </div>
                             </div>
@@ -56,16 +58,35 @@
                                         <div id="content-1">
                                             <form class="user">
                                                 <div class="mb-3">
-{{#each docs}}
-                                                    <div><label class="form-label" style="transform: translate(0px);font-weight: bold;">ID:&nbsp;</label><label class="form-label">{{this.id}}</label></div><small class="form-text">Họ và Tên:&nbsp;</small><input class="form-control" type="text" value="{{this.name}}"><small class="form-text">Tuổi :&nbsp;&nbsp;<input class="form-control" type="number" value="{{this.age}}"></small><small class="form-text">Số điện thoại&nbsp;</small><input class="form-control" type="number" value="{{this.phone}}">
+                                                    {{#each docs}}
+                                                        <div><label class="form-label"
+                                                                    style="transform: translate(0px);font-weight: bold;">ID:&nbsp;</label><label
+                                                                class="form-label">{{this.id}}</label></div>
+                                                        <small class="form-text">Họ và Tên:&nbsp;</small><input
+                                                            class="form-control" type="text"
+                                                            value="{{this.name}}"><small class="form-text">Tuổi :&nbsp;&nbsp;<input
+                                                            class="form-control" type="number"
+                                                            value="{{this.age}}"></small><small class="form-text">Số
+                                                        điện thoại&nbsp;</small><input class="form-control"
+                                                                                       type="number"
+                                                                                       value="{{this.phone}}">
 
-                                                    <div style="margin-top: 10px;"><small class="form-text">Giới tính :&nbsp; &nbsp; &nbsp; &nbsp;</small><input type="radio"><label class="form-label" >&nbsp;Nam&nbsp; &nbsp;</label><input type="radio"><label class="form-label">&nbsp;Nữ&nbsp; &nbsp;</label></div>
-                                                    <div><small class="form-text" style="margin-top: 0;">Key thiết bị :&nbsp;</small><input class="form-control" type="text" value="{{this.key_device}}"></div>
-{{/each}}
+                                                        <div style="margin-top: 10px;"><small class="form-text">Giới
+                                                            tính :&nbsp; &nbsp; &nbsp; &nbsp;</small><input
+                                                                type="radio"><label class="form-label">&nbsp;Nam&nbsp;
+                                                            &nbsp;</label><input type="radio"><label class="form-label">&nbsp;Nữ&nbsp;
+                                                            &nbsp;</label></div>
+                                                        <div><small class="form-text" style="margin-top: 0;">Key thiết
+                                                            bị :&nbsp;</small><input class="form-control" type="text"
+                                                                                     value="{{this.key_device}}"></div>
+                                                    {{/each}}
                                                 </div>
                                                 <div class="mb-3">
                                                     <div class="custom-control custom-checkbox small"></div>
-                                                </div><button class="btn btn-primary d-block btn-user w-100" type="submit">Lưu thông tin bệnh nhân</button>
+                                                </div>
+                                                <button class="btn btn-primary d-block btn-user w-100" type="submit">Lưu
+                                                    thông tin bệnh nhân
+                                                </button>
                                                 <hr>
                                             </form>
                                         </div>
@@ -82,16 +103,23 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <div><canvas data-bss-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;January&quot;,&quot;February&quot;,&quot;March&quot;,&quot;April&quot;,&quot;May&quot;,&quot;June&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Revenue&quot;,&quot;backgroundColor&quot;:&quot;#4e73df&quot;,&quot;borderColor&quot;:&quot;#4e73df&quot;,&quot;data&quot;:[&quot;4500&quot;,&quot;5300&quot;,&quot;6250&quot;,&quot;7800&quot;,&quot;9800&quot;,&quot;15000&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:true,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;bold&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;ticks&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}],&quot;yAxes&quot;:[{&quot;ticks&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}]}}}"></canvas></div>
-                                <div class="text-center" style="margin-top: 20px;"><label class="form-label">TRẠNG THÁI:</label><label class="form-label">&nbsp;BÌNH THƯỜNG</label></div>
+                                <div id="chartContainer" style="height: 370px; width:100%;"></div>
+                                <div class="text-center" style="margin-top: 20px;">
+                                    <label class="form-label">TRẠNG THÁI:</label>
+                                    <label class="form-label">&nbsp;BÌNH
+                                    THƯỜNG</label></div>
                             </div>
                             <div class="col">
-                                <div><canvas data-bss-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;January&quot;,&quot;February&quot;,&quot;March&quot;,&quot;April&quot;,&quot;May&quot;,&quot;June&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Revenue&quot;,&quot;backgroundColor&quot;:&quot;#4e73df&quot;,&quot;borderColor&quot;:&quot;#4e73df&quot;,&quot;data&quot;:[&quot;4500&quot;,&quot;5300&quot;,&quot;6250&quot;,&quot;7800&quot;,&quot;9800&quot;,&quot;15000&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:true,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;bold&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;ticks&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}],&quot;yAxes&quot;:[{&quot;ticks&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}]}}}"></canvas></div>
-                                <div class="text-center" style="margin-top: 20px;"><label class="form-label">TRẠNG THÁI:&nbsp;</label><label class="form-label">BÌNH THƯỜNG</label></div>
+                                <div id="chartContainer" style="height: 370px; width:100%;"></div>
+                                <div class="text-center" style="margin-top: 20px;">
+                                    <label class="form-label">TRẠNG THÁI:&nbsp;</label><label
+                                        class="form-label">BÌNH THƯỜNG</label></div>
                             </div>
                             <div class="col">
-                                <div><canvas data-bss-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;January&quot;,&quot;February&quot;,&quot;March&quot;,&quot;April&quot;,&quot;May&quot;,&quot;June&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Revenue&quot;,&quot;backgroundColor&quot;:&quot;#4e73df&quot;,&quot;borderColor&quot;:&quot;#4e73df&quot;,&quot;data&quot;:[&quot;4500&quot;,&quot;5300&quot;,&quot;6250&quot;,&quot;7800&quot;,&quot;9800&quot;,&quot;15000&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:true,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;bold&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;ticks&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}],&quot;yAxes&quot;:[{&quot;ticks&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}]}}}"></canvas></div>
-                                <div class="text-center" style="margin-top: 20px;"><label class="form-label">TRẠNG THÁI:&nbsp;</label><label class="form-label">BÌNH THƯỜNG</label></div>
+                                <div id="chartContainer" style="height: 370px; width:100%;"></div>
+                                <div class="text-center" style="margin-top: 20px;">
+                                    <label class="form-label">TRẠNG THÁI:&nbsp;</label><label
+                                        class="form-label">BÌNH THƯỜNG</label></div>
                             </div>
                         </div>
                     </div>
@@ -101,7 +129,8 @@
                         <p class="text-primary m-0 fw-bold">Lịch sử đo bệnh nhân</p>
                     </div>
                     <div class="card-body">
-                        <div><label class="form-label">Hiện thị:&nbsp;</label><select class="border rounded border-light d-inline-block dataTable_length">
+                        <div><label class="form-label">Hiện thị:&nbsp;</label><select
+                                class="border rounded border-light d-inline-block dataTable_length">
                             <optgroup label="10">
                                 <option value="10" selected="">10</option>
                                 <option value="25">25</option>
@@ -114,7 +143,9 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th class="text-sm-start text-md-start text-lg-start text-xl-start text-xxl-center text-primary float-none" style="color: #000000;">STT</th>
+                                        <th class="text-sm-start text-md-start text-lg-start text-xl-start text-xxl-center text-primary float-none"
+                                            style="color: #000000;">STT
+                                        </th>
                                         <th class="text-primary" style="color: #000000;">Nhiệt độ&nbsp;</th>
                                         <th class="text-primary" style="color: #000000;">SPO2</th>
                                         <th class="text-primary" style="color: #000000;">Nhịp tim</th>
@@ -122,15 +153,15 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-{{#each docs}}
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td>{{this.temp.[0].value}}</td>
-                                        <td>{{this.heart_beat.[0].value}} nhịp/phút</td>
-                                        <td>{{this.spO2.[0].value}}%</td>
-                                        <td class="text-end">{{this.spO2.[0].date}}<br></td>
-                                    </tr>
-{{/each}}
+                                    {{#each docs}}
+                                        <tr>
+                                            <td class="text-center">1</td>
+                                            <td>{{this.temp.[0].value}}</td>
+                                            <td>{{this.heart_beat.[0].value}} nhịp/phút</td>
+                                            <td>{{this.spO2.[0].value}}%</td>
+                                            <td class="text-end">{{this.spO2.[0].date}}<br></td>
+                                        </tr>
+                                    {{/each}}
 
                                     </tbody>
                                 </table>
@@ -140,13 +171,62 @@
                 </div>
             </div>
         </div>
+
         <footer class="bg-white sticky-footer"></footer>
-    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
+<script>
+    window.onload = function () {
+
+        var dps = []; // dataPoints
+        var chart = new CanvasJS.Chart("chartContainer", {
+            title: {
+                text: "Dynamic Data"
+            },
+            data: [{
+                type: "line",
+                dataPoints: dps
+            }]
+        });
+
+        var xVal = 0;
+        var yVal = 100;
+        var updateInterval = 1000;
+        var dataLength = 20; // number of dataPoints visible at any point
+
+        var updateChart = function (count) {
+
+            count = count || 1;
+
+            for (var j = 0; j < count; j++) {
+                yVal = yVal + Math.round(5 + Math.random() * (-5 - 5));
+                dps.push({
+                    x: xVal,
+                    y: yVal
+                });
+                xVal++;
+            }
+
+            if (dps.length > dataLength) {
+                dps.shift();
+            }
+
+            chart.render();
+        };
+
+        updateChart(dataLength);
+        setInterval(function () {
+            updateChart()
+        }, updateInterval);
+
+    }
+</script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="assets/js/chart.min.js"></script>
 <script src="assets/js/bs-init.js"></script>
 <script src="assets/js/theme.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 
 </html>
