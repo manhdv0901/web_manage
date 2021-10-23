@@ -50,12 +50,19 @@ var db=mongoose.connection;
 //create model data device
 var DHT11Schema = new mongoose.Schema({
     key_device:{type:String, default:"device001"},
-
     heart : Number,
     spO2: Number,
     temp:Number,
     warnn: Number,
     real_time: {type:Date, default: Date.now()}
+});
+
+var DataSenSorUserSchema = new mongoose.Schema({
+    id:Number,
+    key_device:String,
+    spO2:Array,
+    temp:Array,
+    heart_beat:Array
 });
 
 var DOCTORSchema = new mongoose.Schema({
@@ -64,6 +71,18 @@ var DOCTORSchema = new mongoose.Schema({
     username:String,
     password:String,
     state:String,
+});
+
+var UserSchema = new mongoose.Schema({
+    id:Number,
+    name:String,
+    username:String,
+    password:String,
+    age:Number,
+    birth_day:String,
+    number_room:Number,
+    key_device:String,
+    phone:String,
 })
 
 //create collection mongodb
@@ -156,7 +175,30 @@ app.get("/list",(req, res) => {
     //     console.log("ham ham: ",devices)
     //     res.render('table_2',{ups:devices})
     // })
+    });
+app.get("/profile", (req, res) => {
+    var model = db.model('data_details_users', UserSchema);
+    var modelsensor = db.model('data-device', DataSenSorUserSchema);
+    var methodFind = model.find({});
+    var datasensor=modelsensor.find({});
+    //set data lịch sử
+    datasensor.exec((err,data)=>{
+        if (err) throw err;
+        console.log("check data: ", data.map(aa => aa.toJSON()))
+        res.render('profile', {
+                docs: data.map(aa => aa.toJSON())
+            })
     })
+    //set data chi tiết bệnh nhân
+    methodFind.exec((err,data) => {
+        if (err) throw err;
+        // console.log("check data: ", data.map(aa => aa.toJSON()))
+        // res.render('profile', {
+        //     docs: data.map(aa => aa.toJSON())
+        // })
+    })
+});
+
 app.get("/list-doctors", (req, res) => {
     var model = db.model('doctors', DOCTORSchema);
     var methodFind = model.find({});
@@ -167,7 +209,8 @@ app.get("/list-doctors", (req, res) => {
             docs: data.map(aa => aa.toJSON())
         })
     })
-})
+});
+
 app.listen(port,()=>{
     console.log('listening port 3456')
 })
