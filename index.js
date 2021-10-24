@@ -297,7 +297,10 @@ app.get("/list-doctors", (req, res) => {
         })
     })
 });
-app.post('/login', (req, res)=> {
+app.get('', (req, res)=>{
+    res.render('login');
+})
+app.post('/', (req, res)=> {
     var username =  req.body.username;
     var password = req.body.password;
 
