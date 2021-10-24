@@ -364,7 +364,7 @@ app.get("/list-patients", (req, res) => {
             docs: data.map(aa => aa.toJSON())
         })
     })
-});
+})
 
 app.post('/login', [
     body('username', 'Email is required')
