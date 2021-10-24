@@ -58,7 +58,7 @@
                                         <div id="content-1">
                                             <form class="user">
                                                 <div class="mb-3">
-                                                    {{#each docs}}
+                                                    {{#each patient}}
                                                         <div><label class="form-label"
                                                                     style="transform: translate(0px);font-weight: bold;">ID:&nbsp;</label><label
                                                                 class="form-label">{{this.id}}</label></div>
@@ -153,13 +153,30 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {{#each docs}}
+                                    {{#each device}}
                                         <tr>
-                                            <td class="text-center">1</td>
-                                            <td>{{this.temp.[0].value}}</td>
-                                            <td>{{this.heart_beat.[0].value}} nhịp/phút</td>
-                                            <td>{{this.spO2.[0].value}}%</td>
-                                            <td class="text-end">{{this.spO2.[0].date}}<br></td>
+                                            <td style="margin-top: 50px">{{this.key_device}}</td>
+                                            <td style="margin-top: 50px">
+                                                {{#each this.heart}}
+                                                    <div style="margin-top: 50px">heart:{{this.value}} nhịp/phút</div>
+                                                    <div style="margin-top: 50px">real time:{{this.real_time}}</div>
+                                                    <hr/>
+                                                {{/each}}
+                                            </td>
+                                            <td style="margin-top: 50px">
+                                                {{#each this.spO2}}
+                                                    <div style="margin-top: 50px">spo2:{{this.value}} %</div>
+                                                    <div style="margin-top: 50px">real time:{{this.real_time}}</div>
+                                                    <hr/>
+                                                {{/each}}
+                                            </td >
+                                            <td style="margin-top: 50px">
+                                                {{#each this.temp}}
+                                                    <div style="margin-top: 50px">temp:{{this.value}} *C</div>
+                                                    <div style="margin-top: 50px">real time:{{this.real_time}}</div>
+                                                    <hr/>
+                                                {{/each}}
+                                            </td>
                                         </tr>
                                     {{/each}}
 

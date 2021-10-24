@@ -5,46 +5,38 @@
                                     <th>HEART RATE</th>
                                     <th>SPO2</th>
                                     <th>TEMPERATURE</th>
-                                    <th>STATUS</th>
-
                                 </tr>
                      </thead>
+    <tbody>
     {{#each ups}}
         <tr>
-            <td>{{this.key_device}}</td>
-            <td>
+            <td style="margin-top: 50px">{{this.key_device}}</td>
+            <td style="margin-top: 50px">
                 {{#each this.heart}}
-                    <div>heart:{{this.value}}</div>
+                    <div style="margin-top: 50px">heart:{{this.value}}</div>
+                    <div style="margin-top: 50px">real time:{{this.real_time}}</div>
+                    <hr/>
                 {{/each}}
             </td>
-            <td>
+            <td style="margin-top: 50px">
                 {{#each this.spO2}}
-                    <div>spo2:{{this.value}}</div>
+                    <div style="margin-top: 50px">spo2:{{this.value}}</div>
+                    <div style="margin-top: 50px">real time:{{this.real_time}}</div>
+                    <hr/>
                 {{/each}}
-            </td>
-            <td>
+            </td >
+            <td style="margin-top: 50px">
                 {{#each this.temp}}
-                    <div>temp:{{this.value}}</div>
-                {{/each}}
-            </td>
-            <td>
-                {{#each this.sos}}
-                    <div>warns:{{this.value}}</div>
+                    <div style="margin-top: 50px">temp:{{this.value}}</div>
+                    <div style="margin-top: 50px">real time:{{this.real_time}}</div>
+                    <hr/>
                 {{/each}}
             </td>
         </tr>
     {{/each}}
+    </tbody>
 
  <!-- error{ data return empty, only 2 item on view}  -->
 
 </table>
 
-<tbody>
-<!--<tr>-->
-<!--    <td>{{this.key_device}}</td>-->
-<!--    <td>{{this.heart.[0].value}}</td>-->
-<!--    <td>{{this.spO2.[0].value}}</td>-->
-<!--    <td>{{this.temp.[0].value}}</td>-->
-<!--    <td>{{this.warnn.[0].value}}</td>-->
-<!--</tr>-->
-<!--</tbody>-->

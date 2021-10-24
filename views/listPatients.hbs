@@ -10,7 +10,9 @@
                         <th class="column3">Name</th>
                         <th class="column4">Username</th>
                         <th class="column5">Password</th>
-                        <th class="column6">State</th>
+                        <th class="column4">Phone</th>
+                        <th class="column6">Số phòng</th>
+                        <th class="column6">Thiết bị</th>
                     </tr>
                     </thead>
                     {{#each docs}}
@@ -21,7 +23,9 @@
                             <td class="column3">{{this.name}}</td>
                             <td class="column4">{{this.username}}</td>
                             <td class="column5">{{this.password}}</td>
-                            <td class="column6">{{this.state}}</td>
+                            <td class="column4">{{this.phone}}</td>
+                            <td class="column6">{{this.number_room}}</td>
+                            <td class="column6">{{this.key_device}}</td>
                         </tr>
                         </tbody>
                     {{/each}}

@@ -1,6 +1,6 @@
 const express = require('express')
 const exhbs = require('express-handlebars')
-const port = process.env.PORT || 3456
+const port = process.env.PORT || 3000
 const app =express();
 //connect mongoose
 const mongoose = require("mongoose");
@@ -24,11 +24,10 @@ app.engine('hbs',exhbs({
 //mang nhan data tu thiet bi
 var myDataTem = [];
 var myDataHea=[];
-var myDataSpo2 =[];
-var myDataWarn= [];
+var myDataSpO2 =[];
 
 //config mongodb
-const DATABASE_URL ="mongodb+srv://sonhandsome01:sonhandsome01@test-data-datn.fwejn.mongodb.net/test-data-datn?retryWrites=true&w=majority";
+const DATABASE_URL ="mongodb+srv://sonhandsome01:sonhandsome01@test-data-datn.fwejn.mongodb.net/data-project?retryWrites=true&w=majority";
 const DATABASE_CONNECT_OPTION  = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -58,24 +57,20 @@ var db=mongoose.connection;
 //     real_time: {type:Date, default: Date.now()}
 // });
 
-var DHT11Schema = new mongoose.Schema({
+var DEVICESchema = new mongoose.Schema({
     id:Number,
     key_device:String,
     heart:[
         {value: Number,
-            date : Date}
+            real_time : Date}
     ],
     spO2: [
         {value:Number,
-            date :Date}
+            real_time :Date}
     ],
     temp: [
         {value:Number,
-            date :Date}
-    ],
-    sos: [
-        {value:Number,
-            date :Date}
+            real_time :Date}
     ],
 })
 
@@ -90,9 +85,10 @@ var DataSenSorUserSchema = new mongoose.Schema({
 var DOCTORSchema = new mongoose.Schema({
     id:Number,
     name:String,
+    gender:String,
     username:String,
     password:String,
-    state:String,
+    state:Boolean,
 });
 
 var UserSchema = new mongoose.Schema({
@@ -118,12 +114,12 @@ var PATIENTSchema = new mongoose.Schema({
     key_device:String
 })
 //create collection mongodb
-var DHT11 = mongoose.model("data-devices", DHT11Schema);
-var DOCTORS = mongoose.model('doctor', DOCTORSchema);
-var PATIENT = mongoose.model('data-details-users', PATIENTSchema);
+var DEVICE = mongoose.model("data-devices", DEVICESchema);
+var DOCTORS = mongoose.model('data-doctors', DOCTORSchema);
+var PATIENT = mongoose.model('data-patients', PATIENTSchema);
 
 
-app.post("/data", (req,res) =>{
+app.post("/add-device", (req,res) =>{
     console.log("Received create dht11 data request post dht11");
     //get data request
     console.log("heart: ",req.query.heart);
@@ -131,17 +127,13 @@ app.post("/data", (req,res) =>{
     console.log("value: ",myDataHea);
 
     console.log("spO2: ",req.query.spO2);
-    myDataSpo2.push(req.query.spO2);
-    console.log("value: ",myDataSpo2);
+    myDataSpO2.push(req.query.spO2);
+    console.log("value: ",myDataSpO2);
 
     console.log("temp:",req.query.temp);
     myDataTem.push(req.query.temp);
     console.log("value: ",myDataTem);
-
-    console.log("button: ",req.query.sos);
-    myDataSos.push(req.query.sos);
-    console.log("value: ",myDataSos);
-    var newDHT11 = DHT11({
+    var newDEVICE = DEVICE({
         key_device:'device04',
         heart:
             {
@@ -158,20 +150,15 @@ app.post("/data", (req,res) =>{
         temp:
             {
                 value: Number(req.query.temp),
-                date: new Date(),
-            }
-        ,
-        sos:
-            {
-                value: Number(req.query.sos),
                 real_time: new Date(),
             }
+        ,
 
     });
     console.log("data post req: ",req.query);
 
     //insert data
-    // db.collection("data-sensors").insertOne(newDHT11,(err,result)=> {
+    // db.collection("data-devices").insertOne(newDEVICE,(err,result)=> {
     //     if (err) throw  err;
     //     console.log("Thêm thành công");
     //     console.log(result);
@@ -200,18 +187,12 @@ app.post("/data", (req,res) =>{
                     real_time: new Date(),
                 }
             ,
-            sos:
-                {
-                    value: Number(req.query.sos),
-                    real_time: new Date(),
-                }
-
         }
 
     };
 
     //update
-    var model = db.collection("data-sensors");
+    var model = db.collection("data-devices");
     model.updateOne(oldValue,newValue,(err,obj)=>{
         if(err) throw  err;
         if(obj.length!=0) console.log("Cập nhật thành công");
@@ -231,10 +212,6 @@ app.get('/home',(req,res)=>{
     res.render('home')
 });
 
-// app.get('',(req,res)=>{
-//     res.render('index')
-// });
-
 app.get('/login',(req,res)=>{
     res.render('login')
 });
@@ -248,7 +225,7 @@ app.get('/table',(req,res)=>{
 });
 
 app.get("/list",(req, res) => {
-    var model = db.model('data-sensors', DHT11Schema);
+    var model = db.model('data-devices', DEVICESchema);
     var methodFind = model.find({});
     methodFind.exec((err,data) => {
         if (err) throw err;
@@ -266,31 +243,31 @@ app.get("/list",(req, res) => {
     // })
     });
 app.get("/profile", (req, res) => {
-    var model = db.model('data_users', UserSchema);
-    var modelsensor = db.model('data-sensors', DataSenSorUserSchema);
+    var modelPatient = db.model('data-patients', PATIENTSchema);
+    var modelDevice = db.model('data-devices', DEVICESchema);
 
-    var methodFind = model.find({});
-    var datasensor=modelsensor.find({});
+    var dataPatient = modelPatient.find({key_device:"device02", id:1});
+    var dataDevice=modelDevice.find({});
     //set data lịch sử
-    datasensor.exec((err,data)=>{
+    dataDevice.exec((err,data)=>{
         if (err) throw err;
-        console.log("check data: ", data.map(aa => aa.toJSON()))
+        console.log("data device: ", data.map(aa => aa.toJSON()))
         res.render('profile', {
-                docs: data.map(aa => aa.toJSON())
+                device: data.map(aa => aa.toJSON())
             })
     })
     //set data chi tiết bệnh nhân
-    methodFind.exec((err,data) => {
+    dataPatient.exec((err,data) => {
         if (err) throw err;
-        console.log("check data2: ", data.map(aa => aa.toJSON()))
+        console.log("data patient: ", data.map(aa => aa.toJSON()))
         res.render('profile', {
-            docs2: data.map(aa => aa.toJSON())
+            patient: data.map(aa => aa.toJSON())
         })
     })
 });
 
 app.get("/list-doctors", (req, res) => {
-    var model = db.model('doctors', DOCTORSchema);
+    var model = db.model('data-doctors', DOCTORSchema);
     var methodFind = model.find({});
     methodFind.exec((err,data) => {
         if (err) throw err;
@@ -305,7 +282,7 @@ app.get('/', (req, res)=> {
 });
 
 app.get("/list-patients", (req, res) => {
-    var model = db.model('data-users', DOCTORSchema);
+    var model = db.model('data-patients', PATIENTSchema);
     var methodFind = model.find({});
     methodFind.exec((err,data) => {
         if (err) throw err;
@@ -317,5 +294,5 @@ app.get("/list-patients", (req, res) => {
 });
 
 app.listen(port,()=>{
-    console.log('listening port 3456')
+    console.log('listening port 3000')
 })
