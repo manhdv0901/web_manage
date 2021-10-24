@@ -220,6 +220,9 @@ app.get('/home',(req,res)=>{
 app.get('/register',(req,res)=>{
     res.render('register')
 });
+app.get('/login', (req, res)=> {
+    res.render('login');
+})
 
 app.get('/table',(req,res)=>{
     res.render('addPatient')
@@ -291,7 +294,8 @@ app.post('/login', (req, res)=> {
         if(!user){
              res.status(400).json({'errr 400':'err'});
         }
-         res.status(200).json({'mess':'success'})
+         // res.status(200).json({'mess':'success'})
+        res.render('home');
     })
 
 });
