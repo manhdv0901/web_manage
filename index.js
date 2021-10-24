@@ -302,12 +302,6 @@ app.get("/list-doctors", (req, res) => {
         })
     })
 });
-<<<<<<< HEAD
-app.get('', (req, res)=>{
-    res.render('login');
-})
-app.post('/', (req, res)=> {
-=======
 app.post('/login',
     [
         body('username','Tên đăng nhập không được để trống')
@@ -318,7 +312,6 @@ app.post('/login',
             .isEmpty(),
     ],
     (req, res)=> {
->>>>>>> 376e706c44c4fe2fb247c2549698adf1faca1e28
     var username =  req.body.username;
     var password = req.body.password;
     var errors = validationResult(req).array();
