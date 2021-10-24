@@ -123,10 +123,15 @@ var PATIENTSchema = new mongoose.Schema({
     number_room:Number,
     key_device:String
 })
+var USERSchema = new mongoose.Schema({
+    username : String,
+    password: String,
+})
 //create collection mongodb
 var DEVICE = mongoose.model("data-devices", DEVICESchema);
 var DOCTORS = mongoose.model('data-doctors', DOCTORSchema);
 var PATIENT = mongoose.model('data-patients', PATIENTSchema);
+var USER = mongoose.model('data-logins', USERSchema);
 
 
 app.post("/add-device", (req,res) =>{
@@ -228,17 +233,12 @@ app.get('/home',(req,res)=>{
     res.render('home')
 });
 
-app.get('/login',(req,res)=>{
-    res.render('login', {
-        success: req.session.success,
-        errors: req.session.errors
-    });
-    req.session.errors = null;
-});
-
 app.get('/register',(req,res)=>{
     res.render('register')
 });
+app.get('/login', (req, res)=> {
+    res.render('login');
+})
 
 app.get('/table',(req,res)=>{
     res.render('addPatient')
@@ -297,8 +297,24 @@ app.get("/list-doctors", (req, res) => {
         })
     })
 });
-app.get('/', (req, res)=> {
-    res.render('login');
+app.post('/login', (req, res)=> {
+    var username =  req.body.username;
+    var password = req.body.password;
+
+    var model = db.model('data-logins', USERSchema);
+    model.findOne({username: username, password: password}, (err, user) =>{
+        if (err){
+           return console.log("err login: ", err);
+            // res.status(500).json({'err 500':'err'});
+        }
+        if(!user){
+            return console.log('err:', 400);
+            //  res.status(400).json({'errr 400':'err'});
+        }
+         // res.status(200).json({'mess':'success'})
+        res.render('home');
+    })
+
 });
 
 app.get("/list-patients", (req, res) => {
