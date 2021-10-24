@@ -220,8 +220,11 @@ app.get('/home',(req,res)=>{
 app.get('/register',(req,res)=>{
     res.render('register')
 });
-app.get('/login', (req, res)=> {
-    res.render('login');
+app.get('/', (req, res)=> {
+    res.render('/index');
+})
+app.get('/index', (req, res)=> {
+    res.render('../index');
 })
 
 app.get('/table',(req,res)=>{
@@ -281,7 +284,7 @@ app.get("/list-doctors", (req, res) => {
         })
     })
 });
-app.post('/login', (req, res)=> {
+app.post('/index', (req, res)=> {
     var username =  req.body.username;
     var password = req.body.password;
 
