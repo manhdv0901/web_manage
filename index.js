@@ -410,7 +410,7 @@ app.post('/login', [
             }
 
             return res.redirect('/list-patients')
-            // res.status(200).send(user)
+            // res.status(200).send(user);
 
         });
     }
