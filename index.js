@@ -293,7 +293,7 @@ app.post('/login', (req, res)=> {
         }
          res.status(200).json({'mess':'success'})
     })
-    // res.render('login');
+
 });
 
 app.get("/list-patients", (req, res) => {
