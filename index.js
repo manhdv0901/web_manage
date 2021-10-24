@@ -1,6 +1,6 @@
 const express = require('express')
 const { body, validationResult } = require('express-validator');
-
+var expressSession=require('express-session');
 const exhbs = require('express-handlebars')
 const port = process.env.PORT || 3000
 const app =express();
@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const path = require('path')
 const {log} = require("nodemon/lib/utils");
 const cors = require("cors");
+app.use(expressSession({secret:'max',saveUninitialized:false,resave:false}));
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({
     extended: true
@@ -237,7 +238,11 @@ app.get('/register',(req,res)=>{
     res.render('register')
 });
 app.get('/login', (req, res)=> {
-    res.render('login');
+    res.render('login', {
+        success: req.session.success,
+        errors: req.session.errors
+    });
+    req.session.errors = null;
 })
 
 app.get('/table',(req,res)=>{
@@ -297,23 +302,54 @@ app.get("/list-doctors", (req, res) => {
         })
     })
 });
-app.post('/login', (req, res)=> {
+app.post('/login',
+    [
+        body('username','Tên đăng nhập không được để trống')
+            .not()
+            .isEmpty(),
+        body('password', 'Mật khẩu không được để trống')
+            .not()
+            .isEmpty(),
+    ],
+    (req, res)=> {
     var username =  req.body.username;
     var password = req.body.password;
+    var errors = validationResult(req).array();
+        if (errors.length>0) {
+            console.log(errors)
+            req.session.errors = errors;
+            req.session.success = false;
+            res.redirect('/login');
+        }
+       else {
+            req.session.success = true;
+            var model = db.model('data-logins', USERSchema);
+            model.findOne({username: username, password: password}, (err, user) =>{
+                if (err){
+                    return console.log("err login: ", err);
+                }
+                if(!user){
+                    errors.push(
+                            {
+                                value: '',
+                                msg: 'Tên đăng nhập hoặc mật khẩu không chính xác',
+                                param: 'username',
+                                location: 'body'
+                            },
+                    )
+                    console.log(errors)
+                    req.session.errors = errors;
+                    req.session.success = false;
+                    res.redirect('/login');
+                    //  res.status(400).json({'errr 400':'err'});
+                }
+                // res.status(200).json({'mess':'success'})
+                if(user!=null){
+                    res.redirect('/list-patients');
+                }
+            })
+        }
 
-    var model = db.model('data-logins', USERSchema);
-    model.findOne({username: username, password: password}, (err, user) =>{
-        if (err){
-           return console.log("err login: ", err);
-            // res.status(500).json({'err 500':'err'});
-        }
-        if(!user){
-            return console.log('err:', 400);
-            //  res.status(400).json({'errr 400':'err'});
-        }
-         // res.status(200).json({'mess':'success'})
-        res.render('home');
-    })
 
 });
 
