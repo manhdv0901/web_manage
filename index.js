@@ -1,4 +1,6 @@
 const express = require('express')
+const { body, validationResult } = require('express-validator');
+
 const exhbs = require('express-handlebars')
 const port = process.env.PORT || 3000
 const app =express();
@@ -6,10 +8,14 @@ const app =express();
 const mongoose = require("mongoose");
 const path = require('path')
 const {log} = require("nodemon/lib/utils");
+const cors = require("cors");
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({
     extended: true
 }));
+
+
+
 app.use(express.json());
 app.engine('hbs',exhbs({
     defaultLayout: 'main',
@@ -56,7 +62,10 @@ var db=mongoose.connection;
 //     warnn: Number,
 //     real_time: {type:Date, default: Date.now()}
 // });
-
+var loginSchema=new mongoose.Schema({
+    username:String,
+    password:String
+})
 var DEVICESchema = new mongoose.Schema({
     id:Number,
     key_device:String,
@@ -102,6 +111,7 @@ var UserSchema = new mongoose.Schema({
     key_device:String,
     phone:String,
 })
+
 var PATIENTSchema = new mongoose.Schema({
     id:Number,
     name: String,
@@ -206,6 +216,12 @@ app.post("/add-device", (req,res) =>{
 
 app.set('view engine','hbs')
 app.set('views',path.join(__dirname,'/views'))
+
+var corsOptions = {
+    origin: "http://localhost:3000"
+};
+
+
 console.log(__dirname)
 
 app.get('/home',(req,res)=>{
@@ -213,7 +229,11 @@ app.get('/home',(req,res)=>{
 });
 
 app.get('/login',(req,res)=>{
-    res.render('login')
+    res.render('login', {
+        success: req.session.success,
+        errors: req.session.errors
+    });
+    req.session.errors = null;
 });
 
 app.get('/register',(req,res)=>{
@@ -292,6 +312,45 @@ app.get("/list-patients", (req, res) => {
         })
     })
 });
+
+app.post('/login', [
+    body('username', 'Email is required')
+        .isEmail(),
+    body('password', 'Password is requried')
+        .isEmail(),
+       ],
+(req,res)=>{
+    const username = req.body.username;
+    const password = req.body.password;
+    const model = db.model('data-login', loginSchema);
+    var errors = validationResult(req).array();
+        // if (!errors.isEmpty()) {
+        //         // req.errors = errors;
+        //         // req.success = false;
+        //         // res.redirect('/list-patients');
+        // }
+    if (errors) {
+        req.session.errors = errors;
+        req.session.success = false;
+        res.redirect('/login');
+    } else {
+        req.session.success = true;
+        model.findOne({username:username,password:password},function (err,user) {
+            if(err){
+                console.log(err);
+                return res.status(500).send();
+            }
+            if(!user){
+                res.status(404).send();
+            }
+
+            return res.redirect('/list-patients')
+            // res.status(200).send(user)
+
+        });
+    }
+
+})
 
 app.listen(port,()=>{
     console.log('listening port 3000')
