@@ -242,6 +242,7 @@ app.get('/login', (req, res)=> {
         success: req.session.success,
         errors: req.session.errors
     });
+
     req.session.errors = null;
 })
 
