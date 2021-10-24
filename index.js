@@ -246,8 +246,8 @@ app.get("/profile", (req, res) => {
     var modelPatient = db.model('data-patients', PATIENTSchema);
     var modelDevice = db.model('data-devices', DEVICESchema);
 
-    var dataPatient = modelPatient.find({key_device:"device02", id:1});
-    var dataDevice=modelDevice.find({});
+    var dataPatient = modelPatient.find({key_device:"device02", id:1})
+    var dataDevice=modelDevice.find({key_device:"device02"});
     //set data lịch sử
     dataDevice.exec((err,data)=>{
         if (err) throw err;
@@ -257,7 +257,7 @@ app.get("/profile", (req, res) => {
             })
     })
     //set data chi tiết bệnh nhân
-    dataPatient.exec((err,data) => {
+    dataPatient.then((err,data) => {
         if (err) throw err;
         console.log("data patient: ", data.map(aa => aa.toJSON()))
         res.render('profile', {
