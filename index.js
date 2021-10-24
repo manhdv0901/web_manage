@@ -231,9 +231,9 @@ app.get('/home',(req,res)=>{
     res.render('home')
 });
 
-app.get('',(req,res)=>{
-    res.render('index')
-});
+// app.get('',(req,res)=>{
+//     res.render('index')
+// });
 
 app.get('/login',(req,res)=>{
     res.render('login')
@@ -248,7 +248,7 @@ app.get('/table',(req,res)=>{
 });
 
 app.get("/list",(req, res) => {
-    var model = db.model('data-devices', DHT11Schema);
+    var model = db.model('data-sensors', DHT11Schema);
     var methodFind = model.find({});
     methodFind.exec((err,data) => {
         if (err) throw err;
@@ -266,8 +266,9 @@ app.get("/list",(req, res) => {
     // })
     });
 app.get("/profile", (req, res) => {
-    var model = db.model('data_details_users', UserSchema);
-    var modelsensor = db.model('data-device', DataSenSorUserSchema);
+    var model = db.model('data_users', UserSchema);
+    var modelsensor = db.model('data-sensors', DataSenSorUserSchema);
+
     var methodFind = model.find({});
     var datasensor=modelsensor.find({});
     //set data lịch sử
@@ -281,10 +282,10 @@ app.get("/profile", (req, res) => {
     //set data chi tiết bệnh nhân
     methodFind.exec((err,data) => {
         if (err) throw err;
-        // console.log("check data: ", data.map(aa => aa.toJSON()))
-        // res.render('profile', {
-        //     docs: data.map(aa => aa.toJSON())
-        // })
+        console.log("check data2: ", data.map(aa => aa.toJSON()))
+        res.render('profile', {
+            docs2: data.map(aa => aa.toJSON())
+        })
     })
 });
 
@@ -295,6 +296,21 @@ app.get("/list-doctors", (req, res) => {
         if (err) throw err;
         console.log("ham ham: ", data.map(aa => aa.toJSON()))
         res.render('listDoctor', {
+            docs: data.map(aa => aa.toJSON())
+        })
+    })
+});
+app.get('/', (req, res)=> {
+    res.render('login');
+});
+
+app.get("/list-patients", (req, res) => {
+    var model = db.model('data-users', DOCTORSchema);
+    var methodFind = model.find({});
+    methodFind.exec((err,data) => {
+        if (err) throw err;
+        console.log("ham ham: ", data.map(aa => aa.toJSON()))
+        res.render('listPatients', {
             docs: data.map(aa => aa.toJSON())
         })
     })

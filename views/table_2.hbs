@@ -8,20 +8,33 @@
                                     <th>STATUS</th>
 
                                 </tr>
+                     </thead>
+    {{#each ups}}
+        <tr>
+            <td>{{this.key_device}}</td>
+            <td>
+                {{#each this.heart}}
+                    <div>heart:{{this.value}}</div>
+                {{/each}}
+            </td>
+            <td>
+                {{#each this.spO2}}
+                    <div>spo2:{{this.value}}</div>
+                {{/each}}
+            </td>
+            <td>
+                {{#each this.temp}}
+                    <div>temp:{{this.value}}</div>
+                {{/each}}
+            </td>
+            <td>
+                {{#each this.sos}}
+                    <div>warns:{{this.value}}</div>
+                {{/each}}
+            </td>
+        </tr>
+    {{/each}}
 
-                        {{#each ups}}
-                                <tbody >
-                                <tr>
-                                    <td>{{this.key_device}}</td>
-                                        <td>{{this.heart.[0].value}} heart</td>
-<!--                                    <td>{{this.heart.[0].value}} heart</td>-->
-                                    <td>{{this.spO2.[0].value}} sp02</td>
-                                    <td>{{this.temp.[0].value}} temp</td>
-                                    <td>{{this.warnn.[0].value}} warn</td>
-                                </tr>
-                                </tbody>
-                        {{/each}}
-    </thead>
  <!-- error{ data return empty, only 2 item on view}  -->
 
 </table>
