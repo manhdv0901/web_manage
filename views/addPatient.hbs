@@ -10,11 +10,11 @@
                     class="fas fa-tachometer-alt"></i><span>Danh sách bệnh nhân</span></a></li>
             <li class="nav-item"><a class="nav-link" href="/list-doctors"><i class="fas fa-user"></i><span>Danh sách bác sĩ</span></a>
             </li>
-            <li class="nav-item"><a class="nav-link" href="/table"><i
+            <li class="nav-item"><a class="nav-link" href="/add-patient"><i
                     class="fas fa-table"></i><span>Add patient</span></a></li>
             <li class="nav-item"><a class="nav-link" href="/login"><i class="far fa-user-circle"></i><span>Thông báo</span></a>
             </li>
-            <li class="nav-item"><a class="nav-link" href="/register"><i class="fas fa-user-circle"></i><span>Đăng xuẩ</span></a>
+            <li class="nav-item"><a class="nav-link" href="/login"><i class="fas fa-user-circle"></i><span>Đăng xuất</span></a>
             </li>
         </ul>
         <div class="text-center d-none d-md-inline">
@@ -27,7 +27,7 @@
         <div class="card card-4">
             <div class="card-body">
                 <h2 class="title">Thêm bệnh nhân</h2>
-                <form method="POST">
+                <form method="POST" action="/add-patient">
                     <div class="row row-space">
                         <div class="col-2">
                             <div class="input-group">
@@ -66,7 +66,7 @@
                         <div class="col-2">
                             <div class="input-group">
                                 <label class="label">Số Điện Thoại</label>
-                                <input class="input--style-4" type="text" name="username">
+                                <input class="input--style-4" type="text" name="phone">
                             </div>
                         </div>
                     </div>
@@ -100,13 +100,13 @@
                         <div class="col-2">
                             <div class="input-group">
                                 <label class="label">Phòng</label>
-                                <input class="input--style-4" type="email" name="room">
+                                <input class="input--style-4"  name="number_room">
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="input-group">
                                 <label class="label">Key Device</label>
-                                <input class="input--style-4" type="text" name="key">
+                                <input class="input--style-4" type="text" name="key_device">
                             </div>
                         </div>
                     </div>

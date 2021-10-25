@@ -1,5 +1,27 @@
-<body id="page-top">
-<div id="wrapper">
+<nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+    <div class="container-fluid d-flex flex-column p-0"><a
+            class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+        <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+        <div class="sidebar-brand-text mx-3"><span>Profile</span></div>
+    </a>
+        <hr class="sidebar-divider my-0">
+        <ul class="navbar-nav text-light" id="accordionSidebar">
+            <li class="nav-item"><a class="nav-link active" href="/list-patients"><i
+                    class="fas fa-tachometer-alt"></i><span>Danh sách bệnh nhân</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="/list-doctors"><i class="fas fa-user"></i><span>Danh sách bác sĩ</span></a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="/add-patient"><i
+                    class="fas fa-table"></i><span>Add patient</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="/login"><i class="far fa-user-circle"></i><span>Thông báo</span></a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="/login"><i class="fas fa-user-circle"></i><span>Đăng xuất</span></a>
+            </li>
+        </ul>
+        <div class="text-center d-none d-md-inline">
+            <button class=" rounded-circle border-0" id="sidebarToggle" type="button"></button>
+        </div>
+    </div>
+</nav>
     <div class="d-flex flex-column" id="content-wrapper">
         <div id="content">
             <div class="container-fluid">
@@ -144,12 +166,12 @@
                                     <thead>
                                     <tr>
                                         <th class="text-sm-start text-md-start text-lg-start text-xl-start text-xxl-center text-primary float-none"
-                                            style="color: #000000;">STT
+                                            style="color: #000000;">Thiết bị
                                         </th>
                                         <th class="text-primary" style="color: #000000;">Nhiệt độ&nbsp;</th>
                                         <th class="text-primary" style="color: #000000;">SPO2</th>
                                         <th class="text-primary" style="color: #000000;">Nhịp tim</th>
-                                        <th class="text-end text-primary" style="color: #000000;">Thời gian</th>
+                                        <th class=" text-primary" style="color: #000000;">Thời gian</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -159,20 +181,27 @@
                                             <td style="margin-top: 50px">
                                                 {{#each this.heart}}
                                                     <div style="margin-top: 50px">heart:{{this.value}} nhịp/phút</div>
-                                                    <div style="margin-top: 50px">real time:{{this.real_time}}</div>
+<!--                                                    <div style="margin-top: 50px">real time:{{this.real_time}}</div>-->
                                                     <hr/>
                                                 {{/each}}
                                             </td>
                                             <td style="margin-top: 50px">
                                                 {{#each this.spO2}}
                                                     <div style="margin-top: 50px">spo2:{{this.value}} %</div>
-                                                    <div style="margin-top: 50px">real time:{{this.real_time}}</div>
+<!--                                                    <div style="margin-top: 50px">real time:{{this.real_time}}</div>-->
                                                     <hr/>
                                                 {{/each}}
                                             </td >
                                             <td style="margin-top: 50px">
                                                 {{#each this.temp}}
                                                     <div style="margin-top: 50px">temp:{{this.value}} *C</div>
+<!--                                                    <div style="margin-top: 50px">real time:{{this.real_time}}</div>-->
+                                                    <hr/>
+                                                {{/each}}
+                                            </td>
+                                            <td style="margin-top: 50px">
+                                                {{#each this.temp}}
+<!--                                                    <div style="margin-top: 50px">temp:{{this.value}} *C</div>-->
                                                     <div style="margin-top: 50px">real time:{{this.real_time}}</div>
                                                     <hr/>
                                                 {{/each}}

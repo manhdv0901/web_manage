@@ -49,24 +49,14 @@ mongoose.connection.on("connected", function (){
 mongoose.connection.on("disconnected", function (){
     console.log("connect fail");
 });
-
 //connect mongoose
 var db=mongoose.connection;
-
-//create model data device
-// var DHT11Schema = new mongoose.Schema({
-//     key_device:{type:String, default:"device001"},
-//
-//     heart : Number,
-//     spO2: Number,
-//     temp:Number,
-//     warnn: Number,
-//     real_time: {type:Date, default: Date.now()}
-// });
+//model login
 var loginSchema=new mongoose.Schema({
     username:String,
     password:String
 })
+//model device
 var DEVICESchema = new mongoose.Schema({
     id:Number,
     key_device:String,
@@ -83,15 +73,7 @@ var DEVICESchema = new mongoose.Schema({
             real_time :Date}
     ],
 })
-
-var DataSenSorUserSchema = new mongoose.Schema({
-    id:Number,
-    key_device:String,
-    spO2:Array,
-    temp:Array,
-    heart_beat:Array
-});
-
+//model doctor
 var DOCTORSchema = new mongoose.Schema({
     id:Number,
     name:String,
@@ -100,19 +82,7 @@ var DOCTORSchema = new mongoose.Schema({
     password:String,
     state:Boolean,
 });
-
-var UserSchema = new mongoose.Schema({
-    id:Number,
-    name:String,
-    username:String,
-    password:String,
-    age:Number,
-    birth_day:String,
-    number_room:Number,
-    key_device:String,
-    phone:String,
-})
-
+//model patient
 var PATIENTSchema = new mongoose.Schema({
     id:Number,
     name: String,
@@ -124,6 +94,7 @@ var PATIENTSchema = new mongoose.Schema({
     number_room:Number,
     key_device:String
 })
+//model admin web manage
 var USERSchema = new mongoose.Schema({
     username : String,
     password: String,
@@ -230,13 +201,7 @@ var corsOptions = {
 
 console.log(__dirname)
 
-app.get('/home',(req,res)=>{
-    res.render('home')
-});
-
-app.get('/register',(req,res)=>{
-    res.render('register')
-});
+//get login
 app.get('/login', (req, res)=> {
     res.render('login', {
         success: req.session.success,
@@ -245,11 +210,7 @@ app.get('/login', (req, res)=> {
 
     req.session.errors = null;
 })
-
-app.get('/table',(req,res)=>{
-    res.render('addPatient')
-});
-
+// get info all device
 app.get("/list",(req, res) => {
     var model = db.model('data-devices', DEVICESchema);
     var methodFind = model.find({});
@@ -268,30 +229,51 @@ app.get("/list",(req, res) => {
     //     res.render('table_2',{ups:devices})
     // })
     });
-app.get("/profile", (req, res) => {
-    var modelPatient = db.model('data-patients', PATIENTSchema);
-    var modelDevice = db.model('data-devices', DEVICESchema);
+// get infomation detail patient
+// app.get("/profile", (req, res) => {
+//     var modelPatient = db.model('data-patients', PATIENTSchema);
+//     var modelDevice = db.model('data-devices', DEVICESchema);
+//
+//     var dataPatient = modelPatient.find({key_device:"device01"})
+//     var dataDevice=modelDevice.find({key_device:"device01"});
+//
+//     //set data chi tiết bệnh nhân
+//     dataPatient.exec((err,data) => {
+//         if (err) throw err;
+//         console.log("data patient: ", data.map(aa => aa.toJSON()))
+//         res.render('profile', {
+//             patient: data.map(aa => aa.toJSON())
+//         })
+//     })
+//     //set data lịch sử
+//     dataDevice.exec((err,data)=>{
+//         if (err) throw err;
+//         console.log("data device: ", data.map(aa => aa.toJSON()))
+//         res.render('profile', {
+//                 device: data.map(aa => aa.toJSON())
+//             })
+//     })
+//
+// });
 
-    var dataPatient = modelPatient.find({key_device:"device02", id:1})
-    var dataDevice=modelDevice.find({key_device:"device02"});
-    //set data lịch sử
-    dataDevice.exec((err,data)=>{
-        if (err) throw err;
-        console.log("data device: ", data.map(aa => aa.toJSON()))
-        res.render('profile', {
-                device: data.map(aa => aa.toJSON())
+app.get('/profile',(req, res)=>{
+    PATIENT.find({key_device:'device01'},(err, data)=>{
+        if (err){
+            console.log('err patient:', err);
+        }else {
+            DEVICE.find({key_device:'device01'},(err2, data2)=>{
+                if (err){
+                    console.log('err device:', err);
+                }else{
+                    console.log('data patient:',data);
+                    console.log('data device:', data2);
+                    res.render('profile',{patient:data, device:data2})
+                }
             })
+        }
     })
-    //set data chi tiết bệnh nhân
-    dataPatient.then((err,data) => {
-        if (err) throw err;
-        console.log("data patient: ", data.map(aa => aa.toJSON()))
-        res.render('profile', {
-            patient: data.map(aa => aa.toJSON())
-        })
-    })
-});
-
+})
+//get list doctor
 app.get("/list-doctors", (req, res) => {
     var model = db.model('data-doctors', DOCTORSchema);
     var methodFind = model.find({});
@@ -303,6 +285,7 @@ app.get("/list-doctors", (req, res) => {
         })
     })
 });
+//check login
 app.post('/login',
     [
         body('username','Tên đăng nhập không được để trống')
@@ -353,7 +336,7 @@ app.post('/login',
 
 
 });
-
+// get list patient
 app.get("/list-patients", (req, res) => {
     var model = db.model('data-patients', PATIENTSchema);
     var methodFind = model.find({});
@@ -365,44 +348,66 @@ app.get("/list-patients", (req, res) => {
         })
     })
 });
-
-app.post('/login', [
-    body('username', 'Email is required')
-        .isEmail(),
-    body('password', 'Password is requried')
-        .isEmail(),
-       ],
-(req,res)=>{
-    const username = req.body.username;
-    const password = req.body.password;
-    const model = db.model('data-login', loginSchema);
-    var errors = validationResult(req).array();
-        // if (!errors.isEmpty()) {
-        //         // req.errors = errors;
-        //         // req.success = false;
-        //         // res.redirect('/list-patients');
-        // }
-    if (errors) {
-        req.session.errors = errors;
-        req.session.success = false;
-        res.redirect('/login');
-    } else {
-        req.session.success = true;
-        model.findOne({username:username,password:password},function (err,user) {
-            if(err){
-                console.log(err);
-                return res.status(500).send();
-            }
-            if(!user){
-                res.status(404).send();
-            }
-
-            return res.redirect('/list-patients')
-            // res.status(200).send(user);
-
-        });
-    }
-
+//check login web manage
+// app.post('/login', [
+//     body('username', 'Email is required')
+//         .isEmail(),
+//     body('password', 'Password is requried')
+//         .isEmail(),
+//        ],
+// (req,res)=>{
+//     const username = req.body.username;
+//     const password = req.body.password;
+//     const model = db.model('data-login', loginSchema);
+//     var errors = validationResult(req).array();
+//         // if (!errors.isEmpty()) {
+//         //         // req.errors = errors;
+//         //         // req.success = false;
+//         //         // res.redirect('/list-patients');
+//         // }
+//     if (errors) {
+//         req.session.errors = errors;
+//         req.session.success = false;
+//         res.redirect('/login');
+//     } else {
+//         req.session.success = true;
+//         model.findOne({username:username,password:password},function (err,user) {
+//             if(err){
+//                 console.log(err);
+//                 return res.status(500).send();
+//             }
+//             if(!user){
+//                 res.status(404).send();
+//             }
+//
+//             return res.redirect('/list-patients')
+//             // res.status(200).send(user);
+//
+//         });
+//     }
+//
+// })
+app.get('/add-patient',(req, res)=>{
+    res.render('addPatient');
+})
+app.post('/add-patient', (req, res)=>{
+    PATIENT({
+        id:req.body.id,
+        name: req.body.name,
+        username:req.body.username,
+        password: req.body.password,
+        age:req.body.age,
+        birth_day:req.body.birth_day,
+        phone:req.body.phone,
+        number_room:req.body.number_room,
+        key_device:req.body.key_device
+    }).save((err) =>{
+        if (err){
+            console.log('Thêm bệnh nhân thất bại:', err);
+        }
+        res.render('addPatient');
+        console.log('Thành công, user: ', req.body);
+    })
 })
 
 app.listen(port,()=>{
