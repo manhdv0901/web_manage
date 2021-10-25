@@ -198,18 +198,6 @@ var corsOptions = {
     origin: "http://localhost:3000"
 };
 
-<<<<<<< HEAD
-=======
-app.get('/register',(req,res)=>{
-    res.render('register')
-});
-app.get('/', (req, res)=> {
-    res.render('/index');
-})
-app.get('/index', (req, res)=> {
-    res.render('../index');
-})
->>>>>>> develop
 
 console.log(__dirname)
 
@@ -284,6 +272,11 @@ app.get('/profile',(req, res)=>{
             })
         }
     })
+
+})
+
+app.get('/update-patient',(req, res)=>{
+    res.render('infoPatient');
 })
 //get list doctor
 app.get("/list-doctors", (req, res) => {
@@ -297,7 +290,6 @@ app.get("/list-doctors", (req, res) => {
         })
     })
 });
-<<<<<<< HEAD
 //check login
 app.post('/login',
     [
@@ -309,9 +301,6 @@ app.post('/login',
             .isEmpty(),
     ],
     (req, res)=> {
-=======
-app.post('/index', (req, res)=> {
->>>>>>> develop
     var username =  req.body.username;
     var password = req.body.password;
     var errors = validationResult(req).array();
@@ -425,6 +414,43 @@ app.post('/add-patient', (req, res)=>{
         console.log('Thành công, user: ', req.body);
     })
 })
+
+// //update
+app.get('/:key',(req,res)=>{
+    PATIENT.findById(req.params.key,(err, data)=>{
+        if(!err){
+            res.render('infoPatient',{
+                patient:data.toJSON(),
+            })
+        }
+    })
+})
+app.post('/update-patient',(req,res)=>{
+    PATIENT.findOneAndUpdate({_id:req.body.key},req.body,{new : true},( err, doc)=>{
+        if(!err){
+            res.render('infoPatient');
+            console.log("update success");
+        }else {
+            // res.redirect('infoPatient');
+            console.log(err);
+        }
+    })
+})
+
+app.get('/delete/:key', async (req, res) =>{
+    try{
+        const patient = await PATIENT.findByIdAndDelete(req.params.key, req.body);
+        if (!patient){
+            res.status(400).send('Không tìm thấy bệnh nhân');
+        }else {
+            // res.status(200).send();
+            res.redirect('list-patients');
+        }
+    }catch (e){
+        res.status(500).send(e);
+    }
+})
+
 
 app.listen(port,()=>{
     console.log('listening port 3000')

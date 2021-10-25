@@ -36,7 +36,8 @@
                         <th class="column5">Password</th>
                         <th class="column4">Phone</th>
                         <th class="column6">Số phòng</th>
-                        <th class="column6">Thiết bị</th>
+<!--                        <th class="column6">Thiết bị</th>-->
+                        <th class="column6">Sự kiện</th>
                     </tr>
                     </thead>
                     {{#each docs}}
@@ -49,7 +50,11 @@
                             <td class="column5">{{this.password}}</td>
                             <td class="column4">{{this.phone}}</td>
                             <td class="column6">{{this.number_room}}</td>
-                            <td class="column6">{{this.key_device}}</td>
+<!--                            <td class="column6">{{this.key_device}}</td>-->
+                            <td>
+                                <a href="/{{this._id}}" style="width: 10px;float: left; text-align: left" class="btn btn-primary btn-sm">sửa</a>
+                                <a href="/delete/{{this._id}}" style="width: 10px; position: absolute;" onclick="return confirm('Bạn muốn xóa bác sĩ')" class="btn btn-danger btn-sm ">DELETE</a>
+                            </td>
                         </tr>
                         </tbody>
                     {{/each}}
