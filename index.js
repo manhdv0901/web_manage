@@ -272,6 +272,11 @@ app.get('/profile',(req, res)=>{
             })
         }
     })
+
+})
+
+app.get('/update-patient',(req, res)=>{
+    res.render('infoPatient');
 })
 //get list doctor
 app.get("/list-doctors", (req, res) => {
@@ -409,6 +414,46 @@ app.post('/add-patient', (req, res)=>{
         console.log('Thành công, user: ', req.body);
     })
 })
+
+// //update
+app.get('/:key',(req,res)=>{
+    PATIENT.findById(req.params.key,(err, data)=>{
+        if(!err){
+            res.render('infoPatient',{
+                patient:data.toJSON(),
+            })
+        }
+    })
+})
+app.post('/update-patient',(req,res)=>{
+    PATIENT.findOneAndUpdate({_id:req.body.key},req.body,{new : true},( err, doc)=>{
+        if(!err){
+            res.render('infoPatient');
+            console.log("update success");
+        }else {
+            // res.redirect('infoPatient');
+            console.log(err);
+        }
+    })
+})
+
+app.get('/delete/:key', async (req, res) =>{
+    try{
+        const patient = await PATIENT.findByIdAndDelete(req.params.key, req.body);
+        if (!patient){
+            // res.status(400).send('Không tìm thấy bệnh nhân');
+            console.log('delete patient fail');
+        }else {
+            // res.status(200).send();
+            console.log('delete patient success');
+            res.redirect('list-patients');
+            // res.render('listPatients');
+        }
+    }catch (e){
+        res.status(500).send(e);
+    }
+})
+
 
 app.listen(port,()=>{
     console.log(`http://localhost:${port}/login`);

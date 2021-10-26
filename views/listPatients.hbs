@@ -36,12 +36,13 @@
                         <th class="column5">Password</th>
                         <th class="column4">Phone</th>
                         <th class="column6">Số phòng</th>
-                        <th class="column6">Thiết bị</th>
+<!--                        <th class="column6">Thiết bị</th>-->
+                        <th class="column6">Sự kiện</th>
                     </tr>
                     </thead>
                     {{#each docs}}
                         <tbody>
-                        <tr>
+                        <tr >
                             <td class="column1"><img class="rounded-circle me-2" width="30" height="30" src="img/avatars/avatar{{this.id}}.jpeg" /></td>
                             <td class="column2">{{this.id}}</td>
                             <td class="column3">{{this.name}}</td>
@@ -49,7 +50,12 @@
                             <td class="column5">{{this.password}}</td>
                             <td class="column4">{{this.phone}}</td>
                             <td class="column6">{{this.number_room}}</td>
-                            <td class="column6">{{this.key_device}}</td>
+<!--                            <td class="column6">{{this.key_device}}</td>-->
+                            <td>
+<!--                                <button href="/{{this._id}}" type="button" class="btn btn-primary btn-sm">Small button</button>-->
+<!--                                <a href="/{{this._id}}" style="width: 20px; height:20px;float: left; text-align: left; background-color: red;">sửa</a>-->
+<!--                                <a href="/delete/{{this._id}}" style="width: 10px; position: absolute;" onclick="return confirm('Bạn muốn xóa bác sĩ')" class="btn btn-danger btn-sm ">DELETE</a>-->
+                            </td>
                         </tr>
                         </tbody>
                     {{/each}}
