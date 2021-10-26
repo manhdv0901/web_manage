@@ -221,6 +221,7 @@ app.get("/list",(req, res) => {
             ups: data.map(aa => aa.toJSON())
         })
     })
+
     // console.log("request create data");
     // var model = db.model('data-sensor',DHT11Schema);
     //
@@ -229,6 +230,16 @@ app.get("/list",(req, res) => {
     //     res.render('table_2',{ups:devices})
     // })
     });
+//get json devices
+app.get('/json-devices',(req, res)=>{
+    var findDevice = DEVICE.find({});
+    findDevice.exec((err, data)=>{
+        if (err){
+            console.log('get data json patients error');
+        }
+        res.status(200).json(data);
+    })
+})
 // get infomation detail patient
 // app.get("/profile", (req, res) => {
 //     var modelPatient = db.model('data-patients', PATIENTSchema);
@@ -290,6 +301,17 @@ app.get("/list-doctors", (req, res) => {
         })
     })
 });
+//get json doctors
+app.get('/json-doctors',(req, res)=>{
+    var findDoctor = DOCTORS.find({});
+    findDoctor.exec((err, data)=>{
+        if (err){
+            console.log('get data json patients error');
+        }
+        res.status(200).json(data);
+    })
+})
+
 //check login
 app.post('/login',
     [
@@ -353,6 +375,17 @@ app.get("/list-patients", (req, res) => {
         })
     })
 });
+//get json patients
+app.get('/json-patients',(req, res)=>{
+    var findPatient = PATIENT.find({});
+    findPatient.exec((err, data)=>{
+        if (err){
+            console.log('get data json patients error');
+        }
+        res.status(200).json(data);
+    })
+})
+
 //check login web manage
 // app.post('/login', [
 //     body('username', 'Email is required')
