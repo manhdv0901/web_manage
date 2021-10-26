@@ -237,7 +237,6 @@ app.get('/home',(req,res)=>{
 app.get('/register',(req,res)=>{
     res.render('register')
 });
-<<<<<<< HEAD
 app.get('/login', (req, res)=> {
     res.render('login', {
         success: req.session.success,
@@ -245,13 +244,6 @@ app.get('/login', (req, res)=> {
     });
 
     req.session.errors = null;
-=======
-app.get('/', (req, res)=> {
-    res.render('/index');
-})
-app.get('/index', (req, res)=> {
-    res.render('../index');
->>>>>>> develop
 })
 
 app.get('/table',(req,res)=>{
@@ -311,7 +303,6 @@ app.get("/list-doctors", (req, res) => {
         })
     })
 });
-<<<<<<< HEAD
 app.post('/login',
     [
         body('username','Tên đăng nhập không được để trống')
@@ -322,9 +313,6 @@ app.post('/login',
             .isEmpty(),
     ],
     (req, res)=> {
-=======
-app.post('/index', (req, res)=> {
->>>>>>> develop
     var username =  req.body.username;
     var password = req.body.password;
     var errors = validationResult(req).array();
