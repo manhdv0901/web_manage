@@ -198,18 +198,6 @@ var corsOptions = {
     origin: "http://localhost:3000"
 };
 
-<<<<<<< HEAD
-=======
-app.get('/register',(req,res)=>{
-    res.render('register')
-});
-app.get('/', (req, res)=> {
-    res.render('/index');
-})
-app.get('/index', (req, res)=> {
-    res.render('../index');
-})
->>>>>>> develop
 
 console.log(__dirname)
 
@@ -297,7 +285,6 @@ app.get("/list-doctors", (req, res) => {
         })
     })
 });
-<<<<<<< HEAD
 //check login
 app.post('/login',
     [
@@ -309,9 +296,6 @@ app.post('/login',
             .isEmpty(),
     ],
     (req, res)=> {
-=======
-app.post('/index', (req, res)=> {
->>>>>>> develop
     var username =  req.body.username;
     var password = req.body.password;
     var errors = validationResult(req).array();
