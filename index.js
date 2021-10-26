@@ -411,5 +411,5 @@ app.post('/add-patient', (req, res)=>{
 })
 
 app.listen(port,()=>{
-    console.log('listening port 3000')
+    console.log(`http://localhost:${port}/login`);
 })
