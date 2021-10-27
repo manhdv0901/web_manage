@@ -267,23 +267,44 @@ app.get('/json-devices',(req, res)=>{
 //
 // });
 
-app.get('/profile',(req, res)=>{
-    PATIENT.find({key_device:'device01'},(err, data)=>{
-        if (err){
-            console.log('err patient:', err);
+// app.get('/profile',(req, res)=>{
+//     PATIENT.find({key_device:'device01'},(err, data)=>{
+//         if (err){
+//             console.log('err patient:', err);
+//         }else {
+//             DEVICE.find({key_device:'device01'},(err2, data2)=>{
+//                 if (err){
+//                     console.log('err device:', err);
+//                 }else{
+//                     console.log('data patient:',data);
+//                     console.log('data device:', data2);
+//                     res.render('profile',{patient:data, device:data2})
+//                 }
+//             })
+//         }
+//     })
+//
+// })
+//get one info patient
+app.get('/profile/:na', (req, res)=>{
+    PATIENT.findById(req.params.na,(err, data)=>{
+        if(err){
+            console.log('err get data one item patient');
         }else {
-            DEVICE.find({key_device:'device01'},(err2, data2)=>{
-                if (err){
-                    console.log('err device:', err);
-                }else{
-                    console.log('data patient:',data);
-                    console.log('data device:', data2);
-                    res.render('profile',{patient:data, device:data2})
-                }
-            })
+            var myDevice = data.key_device;
+            console.log('key device', data.key_device);
+            DEVICE.find({key_device: myDevice})
+                .exec((er, data2) => {
+                    if (er) throw er;
+                    else {
+                        res.render('profile', {
+                            patient: data, device:data2
+                        })
+                    }
+                })
         }
-    })
 
+    })
 })
 
 app.get('/update-patient',(req, res)=>{
@@ -294,6 +315,7 @@ app.get("/list-doctors", (req, res) => {
     var model = db.model('data-doctors', DOCTORSchema);
     var methodFind = model.find({});
     methodFind.exec((err,data) => {
+        console.log('name:', data.name);
         if (err) throw err;
         console.log("ham ham: ", data.map(aa => aa.toJSON()))
         res.render('listDoctor', {
@@ -369,7 +391,7 @@ app.get("/list-patients", (req, res) => {
     var methodFind = model.find({});
     methodFind.exec((err,data) => {
         if (err) throw err;
-        console.log("ham ham: ", data.map(aa => aa.toJSON()))
+        // console.log("ham ham: ", data.map(aa => aa.toJSON()))
         res.render('listPatients', {
             docs: data.map(aa => aa.toJSON())
         })
@@ -458,6 +480,8 @@ app.get('/:key',(req,res)=>{
         }
     })
 })
+
+
 app.post('/update-patient',(req,res)=>{
     PATIENT.findOneAndUpdate({_id:req.body.key},req.body,{new : true},( err, doc)=>{
         if(!err){
