@@ -550,6 +550,8 @@ app.get('/delete/:key', async (req, res) =>{
 })
 
 
-app.listen(port,()=>{
-    console.log(`http://localhost:${port}/login`);
-})
+// app.listen(port,()=>{
+//     console.log(`http://localhost:${port}/login`);
+// })
+
+app.listen(process.env.PORT);
