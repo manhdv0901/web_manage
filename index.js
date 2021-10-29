@@ -213,6 +213,7 @@ app.get('/login', (req, res)=> {
     req.session.errors = null;
 })
 // get info all device
+
 app.get("/list",(req, res) => {
     var model = db.model('data-devices', DEVICESchema);
     var methodFind = model.find({});
