@@ -105,7 +105,9 @@ var DOCTORS = mongoose.model('data-doctors', DOCTORSchema);
 var PATIENT = mongoose.model('data-patients', PATIENTSchema);
 var USER = mongoose.model('data-logins', USERSchema);
 
-
+app.get('/',(req, res)=>{
+    res.render('login');
+})
 app.post("/add-device", (req,res) =>{
     console.log("Received create dht11 data request post dht11");
     //get data request
