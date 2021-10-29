@@ -385,6 +385,8 @@ app.post('/login',
 
 
 });
+// // get json-login-patient
+
 // get list patient
 app.get("/list-patients", (req, res) => {
     var model = db.model('data-patients', PATIENTSchema);
@@ -447,6 +449,39 @@ app.get('/json-patients',(req, res)=>{
 //     }
 //
 // })
+app.post('/data-login-patient',(req, res)=>{
+    const username = req.body.username;
+    const password = req.body.password;
+    var findPatient = PATIENT.findOne({username: username, password:password});
+    findPatient.exec((err, data)=>{
+        if (err){
+            console.log('get data json patients error');
+        }
+        res.status(200).json(data);
+    })
+})
+app.post('/data-login-doctor',(req, res)=>{
+    const username = req.body.username;
+    const password = req.body.password;
+    var findDoctor = DOCTORS.findOne({username: username, password:password});
+    findDoctor.exec((err, data)=>{
+        if (err){
+            console.log('get data json patients error');
+        }
+        res.status(200).json(data);
+    })
+})
+app.get('/json-login-patient', (req, res) =>{
+    const username = req.body.username;
+    const password = req.body.password;
+    var findDoctor = DOCTORS.findOne({username: username, password:password});
+    findDoctor.exec((err, data)=>{
+        if (err){
+            console.log('get data json patients error');
+        }
+        res.status(200).json(data);
+    })
+})
 app.get('/add-patient',(req, res)=>{
     res.render('addPatient');
 })
