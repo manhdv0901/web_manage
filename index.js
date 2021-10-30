@@ -2,7 +2,7 @@ const express = require('express')
 const { body, validationResult } = require('express-validator');
 var expressSession=require('express-session');
 const exhbs = require('express-handlebars')
-const port = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 const app =express();
 //connect mongoose
 const mongoose = require("mongoose");
@@ -550,8 +550,8 @@ app.get('/delete/:key', async (req, res) =>{
 })
 
 
-// app.listen(port,()=>{
-//     console.log(`http://localhost:${port}/login`);
-// })
+app.listen(PORT,()=>{
+    console.log(`http://localhost:${PORT}/login`);
+})
 
-app.listen(process.env.PORT);
+// app.listen(process.env.PORT);
