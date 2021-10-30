@@ -562,4 +562,4 @@ app.get('/delete/:key', async (req, res) =>{
 //     console.log(`http://localhost:${PORT}/login`);
 // })
 
-app.listen(process.env.PORT);
+app.listen(process.env.PORT || 3000);
