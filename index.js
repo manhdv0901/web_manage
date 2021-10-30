@@ -270,24 +270,24 @@ app.get('/json-devices',(req, res)=>{
 //
 // });
 
-// app.get('/profile',(req, res)=>{
-//     PATIENT.find({key_device:'device01'},(err, data)=>{
-//         if (err){
-//             console.log('err patient:', err);
-//         }else {
-//             DEVICE.find({key_device:'device01'},(err2, data2)=>{
-//                 if (err){
-//                     console.log('err device:', err);
-//                 }else{
-//                     console.log('data patient:',data);
-//                     console.log('data device:', data2);
-//                     res.render('profile',{patient:data, device:data2})
-//                 }
-//             })
-//         }
-//     })
-//
-// })
+app.get('/profile',(req, res)=>{
+    PATIENT.find({key_device:'device01'},(err, data)=>{
+        if (err){
+            console.log('err patient:', err);
+        }else {
+            DEVICE.find({key_device:'device01'},(err2, data2)=>{
+                if (err){
+                    console.log('err device:', err);
+                }else{
+                    console.log('data patient:',data);
+                    console.log('data device:', data2);
+                    res.render('profile',{patient:data, device:data2})
+                }
+            })
+        }
+    })
+
+})
 //get one info patient
 app.get('/profile/:na', (req, res)=>{
     PATIENT.findById(req.params.na,(err, data)=>{
@@ -300,8 +300,16 @@ app.get('/profile/:na', (req, res)=>{
                 .exec((er, data2) => {
                     if (er) throw er;
                     else {
-                        res.render('profile', {
-                            patient: data, device:data2
+                        
+                        DOCTORS.find({state: true})
+                        .exec((er3,  data3) => {
+                            if (er3) throw er3;
+                            else{
+                                console.log(`doctors:`, data3)
+                       res.render('profile', {
+                            patient: data, device:data2, doctors: data3,
+                        }) 
+                            }
                         })
                     }
                 })
@@ -550,8 +558,8 @@ app.get('/delete/:key', async (req, res) =>{
 })
 
 
-app.listen(PORT,()=>{
-    console.log(`http://localhost:${PORT}/login`);
-})
+// app.listen(PORT,()=>{
+//     console.log(`http://localhost:${PORT}/login`);
+// })
 
-// app.listen(process.env.PORT);
+app.listen(process.env.PORT);

@@ -1,4 +1,3 @@
 <?php 
-require_once("index.js");
-
+require_once("index.js")
 ?>
