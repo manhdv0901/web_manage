@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-12 col-xl-10">
+            <div class="card shadow-lg o-hidden border-0 my-5">
+                <div class="card-body p-0">
+                    <section class="register-photo" style="background-color: transparent;">
+                        <div class="form-container" style="margin-top: 40px;">
+                            <div class="col-lg-6 d-none d-lg-flex">
+                                <div class="flex-grow-1 bg-login-image image-holder">
+                                    <img src="img/imageLogin/logoLogin.jpg">
+                                </div>
+                            </div>
+                                
+                            <form method="post" action="/login" style="height: 525px;">
+                                <h2 class="text-center"><strong>Đăng Nhập</strong></h2>
+                                <div class="form-group mb-3"><input type="text" class="form-control" name="username"
+                                        placeholder="Tên đăng nhập" /></div>
+
+                                <div class="form-group mb-3"><input type="password" class="form-control" id="password"
+                                        name="password" placeholder="Mật khẩu" onchange="changePassword()" /></div>
+                                <div id="passwordsError" style="display: none;margin-bottom: 16.5px;"><span
+                                        id="errorMessage" class="text-danger" style="font-size:13px;"></span></div>
+                                <div class="form-group mb-3">
+                                    <div class="form-check"><label class="form-check-label"><input type="checkbox"
+                                                class="form-check-input" />Bạn có đồng ý với điều khoản và dịch
+                                            vụ</label></div>
+                                    {{# if success }}
+                                        <section class="success">
+                                            <h2> </h2>
+                                        </section>
+                                    {{ else }}
+                                        {{# if errors }}
+                                            <section class="errors">
+                                                <ul>
+                                                    {{# each errors }}
+                                                        <li class="alert alert-danger">{{ this.msg }}</li>
+                                                    {{/each}}
+                                                </ul>
+                                            </section>
+                                        {{/if}}
+                                    {{/if}}
+                                </div>
+                                <div class="form-group mb-3"><button class="btn btn-primary d-block w-100"
+                                        id="submitButton" type="submit"
+                                        style="color: rgb(255,255,255);background-color: #00b5a8;">Đăng Nhập</button>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/script.min.js"></script>
